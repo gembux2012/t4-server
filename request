@@ -1,0 +1,343 @@
+class React\Http\Io\ServerRequest#51 (13) {
+  private $attributes =>
+  array(0) {
+  }
+  private $serverParams =>
+  array(6) {
+    'REQUEST_TIME' =>
+    int(1549697138)
+    'REQUEST_TIME_FLOAT' =>
+    double(1549697138.9712)
+    'REMOTE_ADDR' =>
+    string(9) "127.0.0.1"
+    'REMOTE_PORT' =>
+    int(41018)
+    'SERVER_ADDR' =>
+    string(9) "127.0.0.1"
+    'SERVER_PORT' =>
+    int(8008)
+  }
+  private $fileParams =>
+  array(0) {
+  }
+  private $cookies =>
+  array(4) {
+    '_ym_uid' =>
+    string(19) "1539697123179979749"
+    '_ym_d' =>
+    string(10) "1539697123"
+    '_ym_isad' =>
+    string(1) "1"
+    '_ym_wasSynced' =>
+    string(54) "{"time":1549697002725,"params":{"eu":0},"bkParams":{}}"
+  }
+  private $queryParams =>
+  array(0) {
+  }
+  private $parsedBody =>
+  NULL
+  private $method =>
+  string(3) "GET"
+  private $requestTarget =>
+  string(1) "/"
+  private $uri =>
+  class RingCentral\Psr7\Uri#46 (7) {
+    private $scheme =>
+    string(4) "http"
+    private $userInfo =>
+    string(0) ""
+    private $host =>
+    string(9) "localhost"
+    private $port =>
+    int(8008)
+    private $path =>
+    string(1) "/"
+    private $query =>
+    string(0) ""
+    private $fragment =>
+    string(0) ""
+  }
+  protected $headers =>
+  array(9) {
+    'host' =>
+    array(1) {
+      [0] =>
+      string(14) "localhost:8008"
+    }
+    'connection' =>
+    array(1) {
+      [0] =>
+      string(10) "keep-alive"
+    }
+    'cache-control' =>
+    array(1) {
+      [0] =>
+      string(9) "max-age=0"
+    }
+    'accept' =>
+    array(1) {
+      [0] =>
+      string(74) "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+    }
+    'upgrade-insecure-requests' =>
+    array(1) {
+      [0] =>
+      string(1) "1"
+    }
+    'user-agent' =>
+    array(1) {
+      [0] =>
+      string(103) "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36"
+    }
+    'accept-encoding' =>
+    array(1) {
+      [0] =>
+      string(19) "gzip, deflate, sdch"
+    }
+    'accept-language' =>
+    array(1) {
+      [0] =>
+      string(35) "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4"
+    }
+    'cookie' =>
+    array(1) {
+      [0] =>
+      string(167) "_ym_uid=1539697123179979749; _ym_d=1539697123; _ym_isad=1; _ym_wasSynced=%7B%22time%22%3A1549697002725%2C%22params%22%3A%7B%22eu%22%3A0%7D%2C%22bkParams%22%3A%7B%7D%7D"
+    }
+  }
+  protected $headerLines =>
+  array(9) {
+    'Host' =>
+    array(1) {
+      [0] =>
+      string(14) "localhost:8008"
+    }
+    'Connection' =>
+    array(1) {
+      [0] =>
+      string(10) "keep-alive"
+    }
+    'Cache-Control' =>
+    array(1) {
+      [0] =>
+      string(9) "max-age=0"
+    }
+    'Accept' =>
+    array(1) {
+      [0] =>
+      string(74) "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+    }
+    'Upgrade-Insecure-Requests' =>
+    array(1) {
+      [0] =>
+      string(1) "1"
+    }
+    'User-Agent' =>
+    array(1) {
+      [0] =>
+      string(103) "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36"
+    }
+    'Accept-Encoding' =>
+    array(1) {
+      [0] =>
+      string(19) "gzip, deflate, sdch"
+    }
+    'Accept-Language' =>
+    array(1) {
+      [0] =>
+      string(35) "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4"
+    }
+    'Cookie' =>
+    array(1) {
+      [0] =>
+      string(167) "_ym_uid=1539697123179979749; _ym_d=1539697123; _ym_isad=1; _ym_wasSynced=%7B%22time%22%3A1549697002725%2C%22params%22%3A%7B%22eu%22%3A0%7D%2C%22bkParams%22%3A%7B%7D%7D"
+    }
+  }
+  protected $protocol =>
+  string(3) "1.1"
+  protected $stream =>
+  class RingCentral\Psr7\BufferStream#50 (2) {
+    private $hwm =>
+    int(0)
+    private $buffer =>
+    string(0) ""
+  }
+}
+/home/alex/domains/t4-app-mini/vendor/pr-of-it/t4/framework/Mvc/Application.php:89:
+class React\Http\Io\ServerRequest#50 (13) {
+  private $attributes =>
+  array(0) {
+  }
+  private $serverParams =>
+  array(6) {
+    'REQUEST_TIME' =>
+    int(1549697139)
+    'REQUEST_TIME_FLOAT' =>
+    double(1549697139.2699)
+    'REMOTE_ADDR' =>
+    string(9) "127.0.0.1"
+    'REMOTE_PORT' =>
+    int(41020)
+    'SERVER_ADDR' =>
+    string(9) "127.0.0.1"
+    'SERVER_PORT' =>
+    int(8008)
+  }
+  private $fileParams =>
+  array(0) {
+  }
+  private $cookies =>
+  array(4) {
+    '_ym_uid' =>
+    string(19) "1539697123179979749"
+    '_ym_d' =>
+    string(10) "1539697123"
+    '_ym_isad' =>
+    string(1) "1"
+    '_ym_wasSynced' =>
+    string(54) "{"time":1549697002725,"params":{"eu":0},"bkParams":{}}"
+  }
+  private $queryParams =>
+  array(0) {
+  }
+  private $parsedBody =>
+  NULL
+  private $method =>
+  string(3) "GET"
+  private $requestTarget =>
+  string(12) "/favicon.ico"
+  private $uri =>
+  class RingCentral\Psr7\Uri#43 (7) {
+    private $scheme =>
+    string(4) "http"
+    private $userInfo =>
+    string(0) ""
+    private $host =>
+    string(9) "localhost"
+    private $port =>
+    int(8008)
+    private $path =>
+    string(12) "/favicon.ico"
+    private $query =>
+    string(0) ""
+    private $fragment =>
+    string(0) ""
+  }
+  protected $headers =>
+  array(10) {
+    'host' =>
+    array(1) {
+      [0] =>
+      string(14) "localhost:8008"
+    }
+    'connection' =>
+    array(1) {
+      [0] =>
+      string(10) "keep-alive"
+    }
+    'pragma' =>
+    array(1) {
+      [0] =>
+      string(8) "no-cache"
+    }
+    'cache-control' =>
+    array(1) {
+      [0] =>
+      string(8) "no-cache"
+    }
+    'user-agent' =>
+    array(1) {
+      [0] =>
+      string(103) "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36"
+    }
+    'accept' =>
+    array(1) {
+      [0] =>
+      string(3) "*/*"
+    }
+    'referer' =>
+    array(1) {
+      [0] =>
+      string(22) "http://localhost:8008/"
+    }
+    'accept-encoding' =>
+    array(1) {
+      [0] =>
+      string(19) "gzip, deflate, sdch"
+    }
+    'accept-language' =>
+    array(1) {
+      [0] =>
+      string(35) "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4"
+    }
+    'cookie' =>
+    array(1) {
+      [0] =>
+      string(167) "_ym_uid=1539697123179979749; _ym_d=1539697123; _ym_isad=1; _ym_wasSynced=%7B%22time%22%3A1549697002725%2C%22params%22%3A%7B%22eu%22%3A0%7D%2C%22bkParams%22%3A%7B%7D%7D"
+    }
+  }
+  protected $headerLines =>
+  array(10) {
+    'Host' =>
+    array(1) {
+      [0] =>
+      string(14) "localhost:8008"
+    }
+    'Connection' =>
+    array(1) {
+      [0] =>
+      string(10) "keep-alive"
+    }
+    'Pragma' =>
+    array(1) {
+      [0] =>
+      string(8) "no-cache"
+    }
+    'Cache-Control' =>
+    array(1) {
+      [0] =>
+      string(8) "no-cache"
+    }
+    'User-Agent' =>
+    array(1) {
+      [0] =>
+      string(103) "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36"
+    }
+    'Accept' =>
+    array(1) {
+      [0] =>
+      string(3) "*/*"
+    }
+    'Referer' =>
+    array(1) {
+      [0] =>
+      string(22) "http://localhost:8008/"
+    }
+    'Accept-Encoding' =>
+    array(1) {
+      [0] =>
+      string(19) "gzip, deflate, sdch"
+    }
+    'Accept-Language' =>
+    array(1) {
+      [0] =>
+      string(35) "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4"
+    }
+    'Cookie' =>
+    array(1) {
+      [0] =>
+      string(167) "_ym_uid=1539697123179979749; _ym_d=1539697123; _ym_isad=1; _ym_wasSynced=%7B%22time%22%3A1549697002725%2C%22params%22%3A%7B%22eu%22%3A0%7D%2C%22bkParams%22%3A%7B%7D%7D"
+    }
+  }
+  protected $protocol =>
+  string(3) "1.1"
+  protected $stream =>
+  class RingCentral\Psr7\BufferStream#51 (2) {
+    private $hwm =>
+    int(0)
+    private $buffer =>
+    string(0) ""
+  }
+}
+
+
