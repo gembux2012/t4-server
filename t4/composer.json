@@ -14,7 +14,8 @@
     "twig/twig": "1.*",
     "phpmailer/phpmailer": "5.*",
     "psr/log": "1.*",
-    "react/http": "^0.8.4"
+    "react/http": "^0.8.4",
+    "react/child-process": "^0.6.1"
   },
   "require-dev": {
     "phing/phing": "2.*",

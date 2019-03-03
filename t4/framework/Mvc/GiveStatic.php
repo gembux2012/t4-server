@@ -13,21 +13,66 @@ use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Response;
 use React\ChildProcess\Process;
 use T4\Fs\Helpers;
+use T4\Core\Exception;
 
 
 class GiveStatic
 {
 
-    public function __invoke($file)
+    public function __invoke(ServerRequestInterface $request,$loop)
     {
+        $header = [];
+        $status = '';
+        $content_type ='';
+        $conection = '';
 
-        if (file_exists(Helpers::getRealPath($file))) {
-            $childProcess = new Process('cat '.$file, Helpers::getRealPath($file));
+        $ext = pathinfo($request->getRequestTarget(), PATHINFO_EXTENSION);
+        $file = Helpers::getRealPath($request->getRequestTarget());
 
-            return new Response(200, [], $childProcess->stdout
+            if ($request->getHeader('Connection') == 'keep-alive')
+                $conection == 'keep-alive';
 
-            );
+            switch ($ext) {
+
+                case 'css':
+                    $content_type = 'css';
+                    break;
+                case 'js':
+                    $content_type = 'application/javascript';
+                    break;
+                default :
+                    $content_type = 'application/octet-stream';
+            }
+
+        if (file_exists($file)) {
+            $last_modified_time = filemtime($file);
+            $etag = md5_file($file);
+            $header = [
+                "Last-Modified" => gmdate("D, d M Y H:i:s", $last_modified_time) . " GMT",
+                "Etag" => $etag,
+                'Content-Type' => $content_type . ':charset=UTF-8'
+            ];
+
+
+            if (@strtotime($request->getHeaderLine('If-Modified-Since')) == $last_modified_time ||
+                $request->getHeaderLine('If-None-Match') == $etag
+            ) {
+                $status = 304 ;
+            } else {
+                $status = 200 ;
+            }
+
+                $childProcess = new Process('cat ' . $file);
+                $childProcess->start($loop);
+
+                return new Response($status,
+                    $header,
+                    $childProcess->stdout
+
+                );
+            }
+
         }
-    }
+
 
 }

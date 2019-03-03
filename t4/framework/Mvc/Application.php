@@ -90,11 +90,10 @@ class Application
 
 
         $this->init();
-
         $loop = \React\EventLoop\Factory::create();
-        $server = new \React\Http\Server(array(function (
+        $server = new \React\Http\Server(array(function   (
 
-            ServerRequestInterface $request, callable $next) {
+            ServerRequestInterface $request, callable $next) use ($loop){
 
             $promise = new Promise(function ($resolve) use ($next, $request) {
 
@@ -143,39 +142,33 @@ class Application
                 }
             });
               },
-/*
-            function (ServerRequestInterface $request, callable $next)
+
+            function (ServerRequestInterface $request  ) use ($loop)
             {
-                //$return_static = new GiveStatic();
-                //$return_static($request,$next);
-                $file=pathinfo($request->getRequestTarget(), PATHINFO_EXTENSION);
-                if($file ){
-                    return new Response(200, [], 'xcbnxcvbnxcvb'
+                $return_static = new GiveStatic();
+                $return_static($request,$loop);
 
-                    );
-                } else {$next($request);}
 
-            },
-*/
+            }),
             function (ServerRequestInterface $request) use ($loop) {
-
+/*
                 $file = pathinfo($request->getRequestTarget(), PATHINFO_EXTENSION);
                 if ($file) {
                     $givestatic = new GiveStatic();
-                    return $givestatic($request->getRequestTarget(), $loop);
+                    return $givestatic($request, $loop);
                     //return new Response(200, [], 'xcbnxcvbnxcvb'
 
                     //);
                 }
 
-
+*/
                     $this->request = new Request($request);
                     $route = $this->router->parseRequest($this->request);
                     return $this->runRoute($route);
 
             }
 
-        ));
+        );
 
 
 
