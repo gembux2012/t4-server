@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:t4="http://www.w3.org/1999/html">
+<head>
+    <meta>
+    <title>{% if view.meta.title %}{{view.meta.title}} - {% endif %}{{app.config.settings.title}}</title>
+    <meta charset='utf-8'>
+
+    {{publish('/Layouts/Main/assets')}}
+
+    <!--js-->
+    {{ publishJs() }}
+    {{ publishCss() }}
+    <script type="text/javascript" src="{{asset('/Layouts/Main/assets/js/jquery.bxslider.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/Layouts/Main/assets/jasny-bootstrap/js/jasny-bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/Layouts/Main/assets/fancy-box/jquery.fancybox.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/Layouts/Main/assets/mozaik-slow/jquery.mosaicflow.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/Layouts/Main/assets/affix/affix.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/Layouts/Main/assets/mustache/mustache.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('/Layouts/Main/assets/paginator/jquery.simplePagination.js')}}"></script>
+    <!--css-->
+
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('/Layouts/Main/assets/css/style.css')}}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('/Layouts/Main/assets/css/jquery.bxslider.css')}}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('/Layouts/Main/assets/jasny-bootstrap/css/jasny-bootstrap.css')}}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('/Layouts/Main/assets/fancy-box/jquery.fancybox.min.css')}}"/>
+    <link rel="stylesheet" type="text/css" media="screen"href="{{ asset('/Layouts/Main/assets/paginator/simplePagination.css') }}" rel="stylesheet">
+
+    <!--fonts-->
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=cyrillic,latin' rel='stylesheet'
+          type='text/css'>
+
+    <script>
+        $(document).ready(function () {
+            var slider = $('.bxslider');
+            slider.bxSlider({
+                auto: true,
+                mode: 'fade',
+                onSliderLoad: function(){
+                    slider.css("visibility", "visible");
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+
+{% if app.flash.message is defined %}
+<div class="container">
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{app.flash.message}}
+    </div>
+</div>
+{% endif %}
+
+<header>
+    {% include 'Main/_header.html' %}
+</header>
+<section id="content">
+    {% block content %}
+    {% endblock %}
+</section>
+
+<div class="container">
+    <div class="content">
+        <div class="row">
+            <div class="col-md-6">
+                <t4:section id="1" />
+
+            </div>
+
+            <!--second column-->
+            <div class="col-md-3">
+                <t4:section id="2" />
+
+            </div>
+
+            <!--third column-->
+            <div class="col-md-3">
+                <t4:section id="3" />
+
+                <!---->
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <t4:section id="5" />
+</div>
+<div class="container">
+    <t4:section id="6" />
+</div>
+<footer>
+    <div class="container">
+        <div class="row"><t4:section id="4" /></div>
+    </div>
+</footer>
+
+
+
+</body>
+</html>

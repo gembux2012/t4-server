@@ -1,0 +1,34 @@
+<script>
+    $(document).ready(function () {
+
+            $.get('/Gallery/AlbumByUrl.json?url=demo', function () {
+                var template = document.getElementById('#templates').innerHTML;
+                var view = items;
+                var output = Mustache.render(template, view);
+
+                $("#galery").html(output);
+            });
+
+    });
+</script>
+
+
+<body>
+<section id="gallery"></section>
+<sections id="templates" style="display: none;">
+    <div class="container">
+        <h1 class="h3 text-center">Галерея {{ album.title }}</h1>
+        <div id="container_gallery">
+            {{#items}}
+            <div class="mosaicflow__item">
+                <a data-fancybox="gallery" href="{{#image}}{{image}}{{/image}}">
+                    <img class="img-responsive" src="{{{#image}}{{image}}{{/image}}" alt="">
+                </a>
+                <p class="caption">{{#title}}{{title}}{{/title}}</p>
+            </div>
+            {{/items}}
+        </div>
+    </div>
+
+</sections>
+</body>

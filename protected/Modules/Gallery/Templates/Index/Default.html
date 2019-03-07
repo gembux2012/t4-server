@@ -1,0 +1,33 @@
+{% extends 'Main/Inner.html' %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li><a href="/">Главная страница</a></li>
+    <li class="active">Галерея</li>
+    <li></li>
+</ol>
+{% endblock %}
+
+{% block content %}
+{% set provider = provider.setPageSize(10) %}
+
+<div class="row">
+{% for item in provider.getPage(page) %}
+   {% if not item.countPhotos == 0 %}
+    <div class="col-sm-5 text-center" style="margin-bottom: 20px">
+        <div style="height: 220px; overflow: hidden;">
+            <a href="/gallery/albums/{{item.url}}.html">
+                <img src="{% if item.cover %}{{item.cover.image}} {% else %}{{ item.photos[0].image}} {% endif %}" class="img-responsive" style="display:inline-block; max-height: 210px;">
+            </a>
+        </div>
+        <div style="height: 100px; overflow: hidden">
+            <p>
+                <a href="/gallery/albums/{{item.url}}.html"><p style="font-size: 15px">{{item.title}}</p></a>
+            </p>
+        </div>
+    </div>
+    {% endif %}
+{% endfor %}
+</div>
+{{ widget('pager', {'total': provider.total, 'size': provider.pageSize, 'active': page, 'url': '/gallery/?page=%d'}) }}
+{% endblock %}

@@ -10,10 +10,9 @@
 namespace T4\Mvc;
 
 use Psr\Http\Message\ServerRequestInterface;
-use React\Http\Response;
 use React\ChildProcess\Process;
+use React\Http\Response;
 use T4\Fs\Helpers;
-use T4\Core\Exception;
 
 
 class GiveStatic
@@ -35,7 +34,7 @@ class GiveStatic
             switch ($ext) {
 
                 case 'css':
-                    $content_type = 'css';
+                    $content_type = 'text/css';
                     break;
                 case 'js':
                     $content_type = 'application/javascript';
@@ -50,7 +49,7 @@ class GiveStatic
             $header = [
                 "Last-Modified" => gmdate("D, d M Y H:i:s", $last_modified_time) . " GMT",
                 "Etag" => $etag,
-                'Content-Type' => $content_type . ':charset=UTF-8'
+                'Content-Type' => $content_type
             ];
 
 
@@ -62,12 +61,13 @@ class GiveStatic
                 $status = 200 ;
             }
 
-                $childProcess = new Process('cat ' . $file);
-                $childProcess->start($loop);
+            $childProcess = new Process();
+            $childProcess->start($loop);
+            $childProcess->stdout->end('cat ' . $file);
 
-                return new Response($status,
-                    $header,
-                    $childProcess->stdout
+            return new Response($status,
+                $header,
+                $childProcess->stdout
 
                 );
             }

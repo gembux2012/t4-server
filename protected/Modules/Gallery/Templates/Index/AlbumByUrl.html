@@ -1,0 +1,61 @@
+<style>
+    .mosaicflow__item {
+        padding: 3px;
+    }
+
+    .mosaicflow__column {
+        float: left;
+    }
+
+    .mosaicflow__item img {
+        display: block;
+        width: 100%;
+        height: auto;
+        padding: 4px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .mosaicflow__item img:hover {
+        opacity: 0.6;
+        filter: alpha(opacity=60);
+    }
+</style>
+
+<div class="container">
+    <h1 class="h3 text-center">Галерея {{ album.title }}</h1>
+    <div id="container_gallery">
+        {% for item in items %}
+
+        <div class="mosaicflow__item">
+            <a data-fancybox="gallery" href="{{item.image}}">
+                <img class="img-responsive" src="{{item.image}}" alt="">
+            </a>
+            <p class="caption">{{item.title}}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        $('#container_gallery').mosaicflow({
+            itemSelector: '.mosaicflow__item',
+            minItemWidth: 300
+        });
+
+
+        $('.pagination a').click(function(event) {
+
+            event.preventDefault();
+            //  alert("Мы не перешли по ссылке, а вывели своё сообщение!");
+            //console.log($(this).attr("href"));
+            //   var newURL = location.href.split("?")[0];
+            // window.history.pushState('object', document.title, newURL);
+            $('#container_gallery').load($(this).attr("href"));
+        })
+
+    });
+</script>

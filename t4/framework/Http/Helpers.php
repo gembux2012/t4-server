@@ -2,6 +2,7 @@
 
 namespace T4\Http;
 
+
 class Helpers
 {
 
@@ -15,34 +16,47 @@ class Helpers
         }
     }
 
-    public static function setCookie($name, $value, $expire = 0, $allSubDomains = true)
+    public static function setCookie($name, $value, $expire = 0, $max_age, $allSubDomains = true)
     {
+
         $domain = \T4\Mvc\Application::instance()->request->host;
+        $cookie= \T4\Mvc\Application::instance()->request->getCookie();
         if ($allSubDomains)
             $domain = self::getUniversalDomainName($domain);
-        setcookie($name, $value, $expire, '/', $domain, false, true);
+      //  setcookie($name, $value, $expire, '/', $domain, false, true);
+        \T4\Mvc\Application::instance()->headers +=['Set-Cookie' => $name.'='. urlencode($value).'; expires='.$expire
+                           .'; Max-Age='.$max_age.'; path=/; Domain='.$domain.'; HttpOnly' ];
+
+
         if ($expire > time()) {
-            $_COOKIE[$name] = $value;
+            //$_COOKIE[$name] = $value;
+            $cookie[$name] = $value;
         }
+
     }
 
     public static function issetCookie($name)
     {
-        return isset($_COOKIE[$name]);
+        return isset(\T4\Mvc\Application::instance()->request->getCookie()[$name]);
     }
 
     public static function unsetCookie($name, $allSubDomains = true)
     {
-        $domain = \T4\Mvc\Application::instance()->request->host;;
+        $app=\T4\Mvc\Application::instance();
+        $domain = $app->request->host;;
         if ($allSubDomains)
             $domain = self::getUniversalDomainName($domain);
         setcookie($name, '', time() - 60 * 60 * 24 * 30, '/', $domain, false, true);
-        unset($_COOKIE[$name]);
+        $app->headers +=['Set-Cookie' => $name.'= ; 
+                     expires='.date("D, j-M-Y H:i:s T",time() - 60 * 60 * 24 * 30).';'];
+
+            //.'; Max-Age='.$max_age.'; path=/; Domain='.$domain.'; HttpOnly' ];
+      //  unset($app->getCookie()[$name]);
     }
 
     public static function getCookie($name)
     {
-        return $_COOKIE[$name];
+        return\T4\Mvc\Application::instance()->request->getCookie()[$name];
     }
 
     public static function redirect($url)

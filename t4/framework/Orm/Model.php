@@ -123,11 +123,9 @@ abstract class Model
     static public function setConnection($connection)
     {
         if (is_string($connection)) {
-            if ('cli' == PHP_SAPI) {
-                $app = \T4\Console\Application::instance();
-            } else {
-                $app = \T4\Mvc\Application::instance();
-            }
+
+             $app = \T4\Mvc\Application::instance();
+
             static::$connection = $app->db->{$connection};
         } elseif ($connection instanceof Connection) {
             static::$connection = $connection;

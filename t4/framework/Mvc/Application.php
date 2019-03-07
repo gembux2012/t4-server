@@ -53,6 +53,12 @@ class Application
 
     public $request =null;
 
+    public $headers = [];
+
+    public $status ;
+    public $body;
+
+
     protected function init()
     {
         Session::init();
@@ -89,7 +95,9 @@ class Application
     {
 
 
+
         $this->init();
+        //$this -> response = new \T4\Mvc\Response();
         $loop = \React\EventLoop\Factory::create();
         $server = new \React\Http\Server(array(function   (
 
@@ -143,32 +151,26 @@ class Application
             });
               },
 
-            function (ServerRequestInterface $request  ) use ($loop)
-            {
-                $return_static = new GiveStatic();
-                $return_static($request,$loop);
 
-
-            }),
             function (ServerRequestInterface $request) use ($loop) {
-/*
+
                 $file = pathinfo($request->getRequestTarget(), PATHINFO_EXTENSION);
-                if ($file) {
+                if ($file != '' && $file != 'json') {
                     $givestatic = new GiveStatic();
                     return $givestatic($request, $loop);
-                    //return new Response(200, [], 'xcbnxcvbnxcvb'
 
-                    //);
                 }
 
-*/
+
                     $this->request = new Request($request);
                     $route = $this->router->parseRequest($this->request);
-                    return $this->runRoute($route);
+                     return $this->runRoute($route);
+
+
 
             }
 
-        );
+        ));
 
 
 
@@ -182,6 +184,7 @@ class Application
     /**
      * @param \T4\Mvc\Route|string $route
      * @param string $format
+     * @return Response
      * @throws ControllerException
      * @throws E403Exception
      * @throws Exception
@@ -199,12 +202,19 @@ class Application
 
         $front->output($route, $data, $format);
 
-        $response = $controller->view->response;
+        return new Response(
+            $this->status,
+            $this->headers,
+            $this->body
+        );
+        //$controller->view->response;
+/*
         return new Response(
             $response['status'],
             $response['header'],
             $response['body']
         );
+*/
 
     }
 

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:t4="http://www.w3.org/1999/html">
+<head>
+    <meta>
+    <title>{% if view.meta.title %}{{view.meta.title}} - {% endif %}{{app.config.settings.title}}</title>
+    <meta charset='utf-8'>
+
+    {{publish('/Layouts/Main/assets')}}
+    {{ publishCss() }}
+
+    <!--js-->
+    {{ publishJs() }}
+    <script type="text/javascript" src="{{asset('/Layouts/Main/assets/js/jquery.bxslider.min.js')}}"></script>
+    <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
+    <!--css-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('/Layouts/Main/assets/css/style.css')}}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('/Layouts/Main/assets/css/jquery.bxslider.css')}}"/>
+    <!--fonts-->
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=cyrillic,latin' rel='stylesheet'
+          type='text/css'>
+    {% block meta_extra %} {% endblock %}
+    {% block head %}{% endblock %}
+    <script>
+        $(document).ready(function () {
+            var slider = $('.bxslider');
+            slider.bxSlider({
+                mode: 'fade',
+                onSliderLoad: function(){
+                    slider.css("visibility", "visible");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+{% if app.flash.message is defined %}
+<div class="container">
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{app.flash.message}}
+    </div>
+</div>
+{% endif %}
+
+<header>
+    {% include 'Main/_header_inner.html' %}
+</header>
+
+<div class="container">
+    <div class="content">
+        <div class="row">
+            {% block breadcrumb %}{% endblock %}
+        </div>
+        <div class="row">
+            <div class="col-md-9 col-xs-12">
+                {% block content %}{% endblock %}
+            </div>
+            <!--third column-->
+            <div class="col-md-3 col-xs-12">
+                <t4:section id="3" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row"><t4:section id="4" /></div>
+    </div>
+</footer>
+
+{% include 'Main/_counters.html' %}
+</body>
+</html>

@@ -1,0 +1,72 @@
+
+<script>
+
+   function logout (){
+       $.get('/User/Logout.json', function (result) {
+           refreshmenu(result)
+       })
+
+   }
+
+    function getUser() {
+        $.get('/User/GetUser.json', function (result) {
+            refreshmenu(result)
+        })
+
+    }
+
+    function call(){
+        $.post('/User/Login.json',$('#login').serializeArray(),function (result) {
+
+            if(result.login_err)
+                $('#validlogin').html(result.login_err)
+            else
+                refreshmenu(result)
+        })
+        return false
+    }
+
+
+
+    function refreshmenu(result)
+    {
+
+        if (!result.user) {
+            $('#userlogin').html(' <ul class="nav navbar-nav navbar-right"> <li class="dropdown" >' +
+                '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Вход </a>' +
+                '<ul class="dropdown-menu" style="min-width: 202px">' +
+                '<h3 class="text-center" style="color: black"></h3>' +
+                '<form role="form" id="login" action="javascript:void(null);" onsubmit="call()" style="padding: 15px">' +
+                '<div class="form-group">' +
+                '<p id="validlogin" style="color: #9b0000"></p>' +
+                '<div class="input-group">' +
+                '<span class="input-group-addon"><i class="glyphicon glyphicon-login"></i></span>' +
+                '<input type="text" placeholder="login" class="form-control input-sm" name="login[email]" "></div><br>' +
+                '<div class="input-group">' +
+                '<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>\n' +
+                '                                    <input type="password"  id="loginpassword" placeholder="Пароль" class="form-control input-sm"\n' +
+                '                                           name="login[password]">'+
+                '</div><br>'+
+                '<div class="form-group">' +
+                '<button type="submit" class="btn btn-theme-bg pull-right" style="background-color: #77CCDD">' +
+                '<i class="glyphicon glyphicon-share"></i>Войти</button>' +
+                '</div> <a href="#myModal" role="button" data-toggle="modal" style="color: #9b0000; background-color: inherit">Забыли пароль?</a>' +
+                '<div class="clearfix"></div><hr></div></form></ul></li></ul>');
+
+        } else {
+            $('#userlogin').html(
+                ' <ul class="nav navbar-nav navbar-right"><li><a href="javascript:void(0)" onclick="logout()" data-toggle="tooltip" title="Выход">'+result.user+'<span' +
+                'class="glyphicon glyphicon-log-out"></span></a></li></ul>')
+
+        }
+
+    }
+
+
+    $(document).ready(function () {
+
+        getUser();
+
+
+    })
+    </script>

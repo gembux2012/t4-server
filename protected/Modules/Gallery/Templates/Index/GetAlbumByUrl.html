@@ -1,0 +1,91 @@
+{% extends 'Main/Index.html' %}
+{% block content %}
+<script >
+
+
+    function content(num){
+      $.get('/Gallery/getAlbumByUrl.json/?url=demo&page='+num, function (result) {
+
+          var template = document.getElementById('templates').innerHTML;
+          var view =  {items: result.items};
+          var output = Mustache.render(template, view);
+
+          $("#output").html(output);
+
+         var container = $('#container_gallery').mosaicflow({
+              itemSelector: '.mosaicflow__item',
+              minItemWidth: 300,
+          });
+          container.resize();
+
+          });
+
+  }
+
+$(window).load(function(){
+
+         content(1);
+
+        $('#pagination').bootpag({
+            total: {{total}},
+        }).on("page", function(event, num){
+            content(num);
+        });
+    });
+</script>
+
+<style>
+    .mosaicflow__item {
+        padding: 3px;
+    }
+
+    .mosaicflow__column {
+        float: left;
+    }
+
+    .mosaicflow__item img {
+        display: block;
+        width: 100%;
+        height: auto;
+        padding: 4px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .mosaicflow__item img:hover {
+        opacity: 0.6;
+        filter: alpha(opacity=60);
+    }
+</style>
+
+<sections id="output"></sections>
+
+<div class="text-center">
+<div id="pagination" class="pagination "></div>
+</div>
+
+<sections id="templates" style="display: none;">
+
+    <div class="container">
+        <h1 class="h3 text-center">Галерея  {{album.title}}</h1>
+        <div id="container_gallery">
+            {% raw %}
+            {{#items}}
+            <div class="mosaicflow__item">
+                <a data-fancybox="gallery" href="{{image}}">
+                    <img class="img-responsive" src="{{image}}" alt="">
+                </a>
+                <p class="caption">{{title}}</p>
+            </div>
+            {{/items}}
+        </div>
+    </div>
+    {% endraw %}
+
+</sections>
+
+
+{% endblock %}
+
+

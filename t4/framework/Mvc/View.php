@@ -64,9 +64,13 @@ class View
         );
     }
 
-    public function display($template, $data = [] ,$header )
+    public function display($template, $data = [] )
     {
-        $this->response =['status' => 200, 'header' => $header, 'body' => $this->render($template, $data)];
+        //$this->response =['status' => 200, 'header' => $header, 'body' => $this->render($template, $data)];
+         \T4\Mvc\Application::instance() ->status = 200  ;
+        \T4\Mvc\Application::instance()->body =$this->render($template, $data);
+
+        //$response -> body = $this->render($template, $data);
       
 
     }

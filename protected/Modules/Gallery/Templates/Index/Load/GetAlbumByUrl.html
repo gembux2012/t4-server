@@ -1,0 +1,43 @@
+
+<sections id="templates" style="display: none;">
+<style>
+    .mosaicflow__item {
+        padding: 3px;
+    }
+
+    .mosaicflow__column {
+        float: left;
+    }
+
+    .mosaicflow__item img {
+        display: block;
+        width: 100%;
+        height: auto;
+        padding: 4px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .mosaicflow__item img:hover {
+        opacity: 0.6;
+        filter: alpha(opacity=60);
+    }
+</style>
+    <div class="container">
+        <h1 class="h3 text-center">Галерея</h1>
+        <div id="container_gallery">
+            {{#items}}
+            <div class="mosaicflow__item">
+                <a data-fancybox="gallery" href="{{image}}">
+                    <img class="img-responsive" src="{{image}}" alt="">
+                </a>
+                <p class="caption">{{title}}</p>
+            </div>
+            {{/items}}
+        </div>
+    </div>
+
+</sections>
+<?php
+die;

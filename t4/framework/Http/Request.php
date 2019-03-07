@@ -29,6 +29,7 @@ use React\Http\Response;
 class Request
     extends Std
 {
+
     private $request;
 
     public function __construct(ServerRequestInterface $request)
@@ -55,10 +56,10 @@ class Request
         $this->url = new Url( $request->getUri()->getScheme()  . '://' . $request->getUri()->getHost() . ($port != 80 && $port != 443 ? ':' . $port : '') . $request->getUri()->getPath());
 
         //$this->get = new Std($_GET);
-        $this->get=$request->getUri()->getQuery();
+        $this->get = new Std($request->getUri()->getQuery());
 
        // $this->post = new Std($_POST);
-        $this->post = $request->getParsedBody();
+        $this->post = new Std($request->getParsedBody());
 
         $input = file_get_contents('php://input');
         if ($input) {
@@ -107,6 +108,17 @@ class Request
     {
         return $this->url->host;
     }
+
+    public function getCookie()
+    {
+        return $this->request->getCookieParams();
+    }
+
+    public function getHeader($name)
+    {
+        return $this->request->getHeaderLine($name);
+    }
+
 
     public function getPath()
     {
@@ -165,6 +177,8 @@ class Request
         }
         return $ret;
     }
+
+
 
     public function getIp()
     {
