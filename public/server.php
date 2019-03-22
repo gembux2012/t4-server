@@ -45,12 +45,9 @@ $server = new \React\Http\Server(array(function   (
 
       $response=$next($request);
       $body= 'hgjhgjhggjhgjhghj';
-        if (!($body instanceof ReadableStreamInterface))
-        {
-            $body = new HttpBodyStream($body, null);
-        }
 
-        return $response->withBody($body);
+
+        return $response->withBody(\RingCentral\Psr7\stream_for($body));
 
 
     },
