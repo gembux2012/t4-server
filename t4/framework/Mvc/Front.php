@@ -37,7 +37,8 @@ class Front
         }
 
         $template = $this->getTemplateFileName($route, $format);
-
+        $this->controller->view->display($template, $data,$format);
+/*
         switch ($format) {
             case 'json':
                 \T4\Mvc\Application::instance()->headers =['Content-Type' => 'application/json','charset' => 'utf-8'];
@@ -57,6 +58,7 @@ class Front
                 $this->controller->view->display($template, $data);
                break;
         }
+*/
     }
 
 }

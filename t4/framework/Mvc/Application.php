@@ -57,12 +57,15 @@ class Application
 
     public $status ;
     public $body;
+    public $response ;
+
 
 
     protected function init()
     {
         Session::init();
         $this->initExtensions();
+
     }
 
     protected function initExtensions()
@@ -97,7 +100,7 @@ class Application
 
 
         $this->init();
-        //$this -> response = new \T4\Mvc\Response();
+        $this -> response = new Response();
         $loop = \React\EventLoop\Factory::create();
         $server = new \React\Http\Server(array(function   (
 
@@ -109,15 +112,16 @@ class Application
 
             });
 
+            /*
             return $promise->then( null, function (Exception $e){
                 return new Response(
                     500,
                     array(),
                     'Internal error: ' . $e->getMessage()
                 );
-            }
+            } */
 
-            )->otherwise(function($e){
+            return $promise->otherwise(function($e){
                 switch (get_class($e)) {
                     case "T4\Http\E404Exception":
                         {
@@ -152,7 +156,7 @@ class Application
               },
 
 
-            function (ServerRequestInterface $request) use ($loop) {
+            function (ServerRequestInterface $request)  use ($loop) {
 
                 $file = pathinfo($request->getRequestTarget(), PATHINFO_EXTENSION);
                 if ($file != '' && $file != 'json') {
@@ -162,11 +166,9 @@ class Application
                 }
 
 
-                    $this->request = new Request($request);
-                    $route = $this->router->parseRequest($this->request);
-                     return $this->runRoute($route);
-
-
+                $this->request = new Request($request);
+                $route = $this->router->parseRequest($this->request);
+                return  $this->runRoute($route);
 
             }
 
@@ -201,20 +203,16 @@ class Application
         $front = new Front($this, $controller);
 
         $front->output($route, $data, $format);
+    }
+
+    public function AppResponse($status,$headers,$body){
 
         return new Response(
-            $this->status,
-            $this->headers,
-            $this->body
+            $status,
+            $headers,
+            $body
         );
-        //$controller->view->response;
-/*
-        return new Response(
-            $response['status'],
-            $response['header'],
-            $response['body']
-        );
-*/
+
 
     }
 

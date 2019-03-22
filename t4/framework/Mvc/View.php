@@ -64,15 +64,34 @@ class View
         );
     }
 
-    public function display($template, $data = [] )
+    public function display($template, $data = [], $format )
     {
-        //$this->response =['status' => 200, 'header' => $header, 'body' => $this->render($template, $data)];
-         \T4\Mvc\Application::instance() ->status = 200  ;
-        \T4\Mvc\Application::instance()->body =$this->render($template, $data);
+        $app = \T4\Mvc\Application::instance();
+        switch ($format) {
+            case 'json':
+                {
+                    $headers = ['Content-Type' => 'application/json', 'charset' => 'utf-8'];
+                    $body = json_encode($data->toArray(), JSON_UNESCAPED_UNICODE);
 
-        //$response -> body = $this->render($template, $data);
-      
+                    break;
+                }
+            case 'xml':
+                {
+                    $headers = ['Content-Type' => 'text/xml', 'charset' => 'utf-8'];
+                    $body = $this->render($template, $data);
 
+                    break;
+                }
+            default:
+            case 'html':
+            {
+                $headers = ['Content-Type' => 'text/html', 'charset' => 'utf-8'];
+                $body = $this->render($template, $data);
+
+                break;
+            }
+        }
+         return $app->AppResponse(200, $headers, $body);
     }
 
     protected function postProcess($content)
