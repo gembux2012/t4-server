@@ -9,6 +9,7 @@ use React\Http\Response;
 class View
 {
 
+
     /**
      * @var \T4\Mvc\ARenderer
      */
@@ -19,7 +20,8 @@ class View
      */
     public $meta;
 
-    public $response=[];
+    private  $body = null;
+    private  $headers = null;
 
     public function __construct($renderer = '', $paths = [])
     {
@@ -70,28 +72,41 @@ class View
         switch ($format) {
             case 'json':
                 {
-                    $headers = ['Content-Type' => 'application/json', 'charset' => 'utf-8'];
-                    $body = json_encode($data->toArray(), JSON_UNESCAPED_UNICODE);
+                    $this->headers = ['Content-Type' => 'application/json', 'charset' => 'utf-8'];
+                    $this->body = json_encode($data->toArray(), JSON_UNESCAPED_UNICODE);
 
                     break;
                 }
             case 'xml':
                 {
-                    $headers = ['Content-Type' => 'text/xml', 'charset' => 'utf-8'];
-                    $body = $this->render($template, $data);
+                    $this->headers = ['Content-Type' => 'text/xml', 'charset' => 'utf-8'];
+                    $this->body = $this->render($template, $data);
 
                     break;
                 }
             default:
             case 'html':
             {
-                $headers = ['Content-Type' => 'text/html', 'charset' => 'utf-8'];
-                $body = $this->render($template, $data);
+                $this->headers = ['Content-Type' => 'text/html', 'charset' => 'utf-8'];
+                $this->body = $this->render($template, $data);
 
                 break;
             }
         }
-         return $app->AppResponse(200, $headers, $body);
+
+
+    }
+
+    public function __invoke($status = 200, $headers =[], $body = '') {
+        $_headers=empty($headers) ? : $this->headers;
+        $_body=$body ?? $this->body;
+        return new Response(
+            $status,
+            $_headers,
+            $_body
+
+        );
+
     }
 
     protected function postProcess($content)

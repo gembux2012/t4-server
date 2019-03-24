@@ -42,10 +42,10 @@ $server = new \React\Http\Server(array(function   (
 },
 
     function (ServerRequestInterface $request, callable $next) {
+      $response= new Response();
 
       $response=$next($request);
       $body= 'hgjhgjhggjhgjhghj';
-
 
         return $response->withBody(\RingCentral\Psr7\stream_for($body));
 

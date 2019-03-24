@@ -53,10 +53,7 @@ class Application
 
     public $request =null;
 
-    public $headers = [];
 
-    public $status ;
-    public $body;
     public $response ;
 
 
@@ -100,7 +97,6 @@ class Application
 
 
         $this->init();
-        $this -> response = new Response();
         $loop = \React\EventLoop\Factory::create();
         $server = new \React\Http\Server(array(function   (
 
@@ -156,7 +152,7 @@ class Application
               },
 
 
-            function (ServerRequestInterface $request)  use ($loop) {
+            function (ServerRequestInterface $request )  use ($loop) {
 
                 $file = pathinfo($request->getRequestTarget(), PATHINFO_EXTENSION);
                 if ($file != '' && $file != 'json') {
@@ -168,9 +164,12 @@ class Application
 
                 $this->request = new Request($request);
                 $route = $this->router->parseRequest($this->request);
-                return  $this->runRoute($route);
+                return $this->runRoute($route);
 
             }
+
+
+
 
         ));
 
@@ -201,8 +200,10 @@ class Application
         $data = $controller->getData();
 
         $front = new Front($this, $controller);
-
         $front->output($route, $data, $format);
+        $view = $controller->view;
+        return $view();
+
     }
 
     public function AppResponse($status,$headers,$body){
