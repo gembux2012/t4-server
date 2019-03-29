@@ -61,9 +61,9 @@ class GiveStatic
                 $status = 200 ;
             }
 
-            $childProcess = new Process();
+            $childProcess = new Process('cat ' . $file);
             $childProcess->start($loop);
-            $childProcess->stdout->end('cat ' . $file);
+
 
             return new Response($status,
                 $header,

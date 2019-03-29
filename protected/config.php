@@ -11,7 +11,7 @@ return [
         ],
     ],
     'auth' => [
-        'expire' => 36000 // 25 min
+        'expire' => 600 // 25 min
     ],
     'extensions' => [
         'jquery' => [

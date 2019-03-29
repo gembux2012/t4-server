@@ -14,20 +14,23 @@ class User
         if (null !== $login) {
             try {
                 $identity = new Identity();
-                $identity->authenticate($login);
+                $headers=$identity->authenticate($login);
+                $this->view->SetHeaders($headers);
                // $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
                // $this->redirect('/');
             } catch (\T4\Core\Exception $e) {
                 $this->data->login_err = $e->getMessage();
             }
             $this->data->user = $login->email;
+
         }
     }
 
     public function actionLogout()
     {
         $identity = new Identity();
-        $identity->logout();
+        $headers=$identity->logout();
+        $this->view->SetHeaders($headers);
         if ($this->app->user)
             $this->data->user=$this->app->user->email;
       //  $this->redirect('/');

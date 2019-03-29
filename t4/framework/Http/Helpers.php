@@ -3,6 +3,8 @@
 namespace T4\Http;
 
 
+use React\Http\Response;
+
 class Helpers
 {
 
@@ -16,7 +18,7 @@ class Helpers
         }
     }
 
-    public static function setCookie($name, $value, $expire = 0, $max_age, $allSubDomains = true)
+    public  static function setCookie($name, $value, $expire = 0, $max_age, $allSubDomains = true)
     {
 
         $domain = \T4\Mvc\Application::instance()->request->host;
@@ -24,7 +26,7 @@ class Helpers
         if ($allSubDomains)
             $domain = self::getUniversalDomainName($domain);
       //  setcookie($name, $value, $expire, '/', $domain, false, true);
-        \T4\Mvc\Application::instance()->headers +=['Set-Cookie' => $name.'='. urlencode($value).'; expires='.$expire
+         return ['Set-Cookie' => $name.'='. urlencode($value).'; expires='.$expire
                            .'; Max-Age='.$max_age.'; path=/; Domain='.$domain.'; HttpOnly' ];
 
 
@@ -46,12 +48,12 @@ class Helpers
         $domain = $app->request->host;;
         if ($allSubDomains)
             $domain = self::getUniversalDomainName($domain);
-        setcookie($name, '', time() - 60 * 60 * 24 * 30, '/', $domain, false, true);
-        $app->headers +=['Set-Cookie' => $name.'= ; 
+        //setcookie($name, '', time() - 60 * 60 * 24 * 30, '/', $domain, false, true);
+        return ['Set-Cookie' => $name.'= ; 
                      expires='.date("D, j-M-Y H:i:s T",time() - 60 * 60 * 24 * 30).';'];
 
             //.'; Max-Age='.$max_age.'; path=/; Domain='.$domain.'; HttpOnly' ];
-      //  unset($app->getCookie()[$name]);
+        unset($app->getCookie()[$name]);
     }
 
     public static function getCookie($name)
@@ -69,6 +71,15 @@ class Helpers
             header('Location: ' . $url, true, 302);
         }
         exit;
+    }
+
+    public function __invoke()
+    {
+        return new Response(
+            200,
+           // ['Content-Type' => 'text/plain'],
+            self::$cookie
+        );
     }
 
 }

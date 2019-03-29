@@ -2,6 +2,7 @@
 
 namespace T4\Mvc;
 
+use App\Models\User;
 use React\Promise\RejectedPromise;
 use T4\Console\TRunCommand;
 use T4\Core\Exception;
@@ -63,6 +64,7 @@ class Application
         Session::init();
         $this->initExtensions();
 
+
     }
 
     protected function initExtensions()
@@ -98,9 +100,13 @@ class Application
 
         $this->init();
         $loop = \React\EventLoop\Factory::create();
-        $server = new \React\Http\Server(array(function   (
+
+               $server = new \React\Http\Server(array(function   (
 
             ServerRequestInterface $request, callable $next) use ($loop){
+                   $loop->addPeriodicTimer(301, function()  {
+                       $this->db;
+                   });
 
             $promise = new Promise(function ($resolve) use ($next, $request) {
 
@@ -154,6 +160,8 @@ class Application
 
             function (ServerRequestInterface $request )  use ($loop) {
 
+
+
                 $file = pathinfo($request->getRequestTarget(), PATHINFO_EXTENSION);
                 if ($file != '' && $file != 'json') {
                     $givestatic = new GiveStatic();
@@ -177,6 +185,9 @@ class Application
 
         $socket = new \React\Socket\Server(8008, $loop);
         $server->listen($socket);
+        $server->on('error', function (Exception $e){
+           echo $e->getMesage();
+        });
         $loop->run();
 
     }

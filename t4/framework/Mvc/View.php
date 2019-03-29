@@ -66,20 +66,25 @@ class View
         );
     }
 
+  public function SetHeaders($headers){
+      $this->headers = $headers;
+  }
+
     public function display($template, $data = [], $format )
     {
         $app = \T4\Mvc\Application::instance();
         switch ($format) {
             case 'json':
                 {
-                    $this->headers = ['Content-Type' => 'application/json', 'charset' => 'utf-8'];
+                    $this->headers = isset($this->headers) ? $this->headers +=['Content-Type' => 'application/json', 'charset' => 'utf-8']
+                        : ['Content-Type' => 'application/json', 'charset' => 'utf-8'];
                     $this->body = json_encode($data->toArray(), JSON_UNESCAPED_UNICODE);
 
                     break;
                 }
             case 'xml':
                 {
-                    $this->headers = ['Content-Type' => 'text/xml', 'charset' => 'utf-8'];
+                    $this->headers += ['Content-Type' => 'text/xml', 'charset' => 'utf-8'];
                     $this->body = $this->render($template, $data);
 
                     break;
@@ -87,7 +92,9 @@ class View
             default:
             case 'html':
             {
-                $this->headers = ['Content-Type' => 'text/html', 'charset' => 'utf-8'];
+
+                $this->headers = isset($this->headers) ? $this->headers +=['Content-Type' => 'text/html', 'charset' => 'utf-8']
+                    : ['Content-Type' => 'text/html', 'charset' => 'utf-8'];
                 $this->body = $this->render($template, $data);
 
                 break;
@@ -98,8 +105,9 @@ class View
     }
 
     public function __invoke($status = 200, $headers =[], $body = '') {
-        $_headers=empty($headers) ? : $this->headers;
-        $_body=$body ?? $this->body;
+        $_headers=!empty($headers) ? : $this->headers;
+        $_body=!empty($body) ? : $this->body;
+
         return new Response(
             $status,
             $_headers,

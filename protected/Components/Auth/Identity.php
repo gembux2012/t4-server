@@ -4,6 +4,7 @@ namespace App\Components\Auth;
 
 use App\Models\User;
 use App\Models\UserSession;
+use T4\Http\Helpers;
 use T4\Mvc\Application;
 use T4\Auth\Exception;
 use T4\Core\Session;
@@ -17,6 +18,17 @@ class Identity
     const ERROR_INVALID_TIME = 104;
     const ERROR_INVALID_NAME = 105;
     const AUTH_COOKIE_NAME = 'T4auth';
+
+    /**
+     * @var
+     */
+    private $helpers;
+
+    public function __construct()
+    {
+        $this->helpers = new Helpers();
+    }
+
 
     public function authenticate($data)
     {
@@ -45,29 +57,33 @@ class Identity
 
 
 
-        $this->login($user);
+
         Application::Instance()->user = $user;
-        return $user;
+        return $this->login($user);
+
     }
 
     public function getUser()
     {
-        if (!\T4\Http\Helpers::issetCookie(self::AUTH_COOKIE_NAME))
+
+
+        if (!Helpers::issetCookie(self::AUTH_COOKIE_NAME))
             return null;
 
-        $hash = \T4\Http\Helpers::getCookie(self::AUTH_COOKIE_NAME);
+        $hash = Helpers::getCookie(self::AUTH_COOKIE_NAME);
         $session = UserSession::findByHash($hash);
         if (empty($session)) {
-            \T4\Http\Helpers::unsetCookie(self::AUTH_COOKIE_NAME);
+            Helpers::unsetCookie(self::AUTH_COOKIE_NAME);
             return null;
         }
 
 
         if ($session->userAgentHash != md5(\T4\Mvc\Application::Instance()->request->getHeader('User-Agent'))) {
             $session->delete();
-            \T4\Http\Helpers::unsetCookie(self::AUTH_COOKIE_NAME);
+            Helpers::unsetCookie(self::AUTH_COOKIE_NAME);
             return null;
         }
+
 
         return $session->user;
 
@@ -132,15 +148,16 @@ class Identity
     public function login($user)
     {
         $app = Application::Instance();
+        date_default_timezone_set('GMT');
         $expire = isset($app->config->auth) && isset($app->config->auth->expire) ?
             time() + $app->config->auth->expire :
             0;
 
         $hash = md5(time() . $user->password);
-        date_default_timezone_set('GMT');
 
-        \T4\Http\Helpers::setCookie(self::AUTH_COOKIE_NAME, $hash, date("D, j-M-Y H:i:s T",$expire)
-        ,$expire);
+
+
+
 
         $session = new UserSession();
         $session->hash = $hash;
@@ -148,6 +165,9 @@ class Identity
 
         $session->user = $user;
         $session->save();
+        $header = \T4\Http\Helpers::setCookie(self::AUTH_COOKIE_NAME, $hash, date("D, j-M-Y H:i:s T",$expire)
+            ,$app->config->auth->expire);
+        return $header;
     }
 
     public function logout()
@@ -163,10 +183,12 @@ class Identity
         }
 
         $session->delete();
-        \T4\Http\Helpers::unsetCookie(self::AUTH_COOKIE_NAME);
+
 
         $app = Application::Instance();
         $app->user = null;
+        return \T4\Http\Helpers::unsetCookie(self::AUTH_COOKIE_NAME);
     }
+
 
 }
