@@ -95,8 +95,8 @@ trait TApplicationMagic
     {
         static $db = null;
         if (null === $db) {
-            $db = new Connections($this->config->db);
-        }
+
+        } $db = new Connections($this->config->db);
         return $db;
     }
 

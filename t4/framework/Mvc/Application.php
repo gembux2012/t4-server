@@ -11,6 +11,7 @@ use T4\Core\Session;
 use T4\Core\Std;
 use T4\Core\TSingleton;
 use T4\Core\TStdGetSet;
+use T4\Dbal\Connection;
 use T4\Http\E403Exception;
 use T4\Http\E404Exception;
 use T4\Http\Request;
@@ -100,13 +101,26 @@ class Application
 
         $this->init();
         $loop = \React\EventLoop\Factory::create();
+        $count=0;
 
                $server = new \React\Http\Server(array(function   (
 
-            ServerRequestInterface $request, callable $next) use ($loop){
-                   $loop->addPeriodicTimer(301, function()  {
-                       $this->db;
-                   });
+            ServerRequestInterface $request, callable $next) use ($loop,&$count){
+                    $count++;
+                   if ($count ==1) {
+                       $time1=time();
+                   }
+
+                   if ($count%2 === 0) {
+                       $time2 = time();
+
+                       if ($time2 - $time1 >= 300) {
+                           unset($this->db);
+                           $this->db = new Connections($this->config->db);
+                       }
+                       $count=0;
+                   }
+
 
             $promise = new Promise(function ($resolve) use ($next, $request) {
 
