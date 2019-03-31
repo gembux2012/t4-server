@@ -26,7 +26,7 @@ class GiveStatic
         $conection = '';
 
         $ext = pathinfo($request->getRequestTarget(), PATHINFO_EXTENSION);
-        $file = Helpers::getRealPath($request->getRequestTarget());
+        $file = Helpers::getRealPath($request->getUri()->getPath());
 
             if ($request->getHeader('Connection') == 'keep-alive')
                 $conection == 'keep-alive';
@@ -58,11 +58,11 @@ class GiveStatic
             ) {
                 $status = 304 ;
             } else {
-                $status = 200 ;
+                $status = 200;
+                $childProcess = new Process('cat ' . $file);
+                $childProcess->start($loop);
             }
 
-            $childProcess = new Process('cat ' . $file);
-            $childProcess->start($loop);
 
 
             return new Response($status,

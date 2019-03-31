@@ -101,25 +101,10 @@ class Application
 
         $this->init();
         $loop = \React\EventLoop\Factory::create();
-        $count=0;
 
                $server = new \React\Http\Server(array(function   (
 
-            ServerRequestInterface $request, callable $next) use ($loop,&$count){
-                    $count++;
-                   if ($count ==1) {
-                       $time1=time();
-                   }
-
-                   if ($count%2 === 0) {
-                       $time2 = time();
-
-                       if ($time2 - $time1 >= 300) {
-                           unset($this->db);
-                           $this->db = new Connections($this->config->db);
-                       }
-                       $count=0;
-                   }
+            ServerRequestInterface $request, callable $next) use ($loop){
 
 
             $promise = new Promise(function ($resolve) use ($next, $request) {
@@ -176,7 +161,7 @@ class Application
 
 
 
-                $file = pathinfo($request->getRequestTarget(), PATHINFO_EXTENSION);
+                $file = pathinfo($request->getUri()->getPath(), PATHINFO_EXTENSION);
                 if ($file != '' && $file != 'json') {
                     $givestatic = new GiveStatic();
                     return $givestatic($request, $loop);

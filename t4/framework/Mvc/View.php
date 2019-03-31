@@ -22,7 +22,7 @@ class View
 
     private  $body = null;
     private  $headers = null;
-
+    private $status =200;
     public function __construct($renderer = '', $paths = [])
     {
         $this->meta = new Meta();
@@ -61,6 +61,7 @@ class View
 
     public function render($template, $data = [])
     {
+
         return $this->postProcess(
             $this->renderer->render($template, $data)
         );
@@ -70,8 +71,13 @@ class View
       $this->headers = $headers;
   }
 
+    public function SetStatus($status){
+        $this->status = $status;
+    }
     public function display($template, $data = [], $format )
     {
+        if($this->status ==302)
+            return;
         $app = \T4\Mvc\Application::instance();
         switch ($format) {
             case 'json':
@@ -104,12 +110,12 @@ class View
 
     }
 
-    public function __invoke($status = 200, $headers =[], $body = '') {
+    public function __invoke($status=0, $headers =[], $body = '') {
         $_headers=!empty($headers) ? : $this->headers;
         $_body=!empty($body) ? : $this->body;
-
+        $_status = $status == 0 ?  $this->status : $status;
         return new Response(
-            $status,
+            $_status,
             $_headers,
             $_body
 

@@ -66,20 +66,15 @@ class Helpers
         if (false === strpos($url, 'http') && false === strpos($url, 'https')) {
             $protocol = \T4\Mvc\Application::instance()->request->protocol;
             $host = \T4\Mvc\Application::instance()->request->host;
-            header('Location: ' . $protocol . '://' . $host . $url, true, 302);
+            return ['Location' => $protocol . '://' . $host . $url];
+            //header('Location: ' . $protocol . '://' . $host . $url, true, 302);
         } else {
-            header('Location: ' . $url, true, 302);
+            return ['Location' => $url];
+            //header('Location: ' . $url, true, 302);
         }
-        exit;
+
     }
 
-    public function __invoke()
-    {
-        return new Response(
-            200,
-           // ['Content-Type' => 'text/plain'],
-            self::$cookie
-        );
-    }
+
 
 }

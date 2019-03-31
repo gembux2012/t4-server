@@ -95,10 +95,12 @@ class Gallery
                 $this->redirect('/admin/gallery/albumEditContent?id=' . $id);
             } else
                 $this->redirect('/admin/gallery/albumEdit');
+                 return;
         }
 
         if ($redirect) {
             $this->redirect('/gallery/albums/' . $item->url . '.html');
+
         }
         $this->redirect('/admin/gallery/');
     }
@@ -110,6 +112,7 @@ class Gallery
             $item->delete();
         }
         $this->redirect('/admin/gallery/');
+
     }
 
     public function actionAlbumUp($id)

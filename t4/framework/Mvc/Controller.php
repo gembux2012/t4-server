@@ -195,7 +195,10 @@ abstract class Controller
 
     protected function redirect($url)
     {
-        Helpers::redirect($url);
+        $this->view->SetHeaders(Helpers::redirect($url));
+        $this->view->SetStatus(302);
+
+      
     }
 
 }

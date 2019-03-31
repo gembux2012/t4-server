@@ -10,16 +10,18 @@ class m_1423048663_createStories
 
     public function up()
     {
-        $this->createTable('news_stories', [
-            'title' => ['type'=>'string', 'length' => 1024],
-            'published' => ['type'=>'datetime'],
-            'image' => ['type'=>'string'],
-            'lead' => ['type'=>'text'],
-            'text' => ['type'=>'text'],
-            '__topic_id' => ['type'=>'link'],
-        ], [
-            'topic'=>['columns'=>['__topic_id']]
-        ]);
+        if (!$this->existsTable('news_stories')) {
+            $this->createTable('news_stories', [
+                'title' => ['type' => 'string', 'length' => 1024],
+                'published' => ['type' => 'datetime'],
+                'image' => ['type' => 'string'],
+                'lead' => ['type' => 'text'],
+                'text' => ['type' => 'text'],
+                '__topic_id' => ['type' => 'link'],
+            ], [
+                'topic' => ['columns' => ['__topic_id']]
+            ]);
+        }
     }
 
     public function down()

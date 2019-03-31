@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../t4/vendor/autoload.php';
 require __DIR__ . '/boot.php';
 require __DIR__ . '/autoload.php';
 

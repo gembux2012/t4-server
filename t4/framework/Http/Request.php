@@ -53,10 +53,10 @@ class Request
 
 */
         $port=$request->getUri()->getPort();
-        $this->url = new Url( $request->getUri()->getScheme()  . '://' . $request->getUri()->getHost() . ($port != 80 && $port != 443 ? ':' . $port : '') . $request->getUri()->getPath());
+        $this->url = new Url( $request->getUri()->getScheme()  . '://' . $request->getUri()->getHost() . ($port != 80 && $port != 443 ? ':' . $port : '') . $request->getRequestTarget());
 
         //$this->get = new Std($_GET);
-        $this->get = new Std($request->getUri()->getQuery());
+        $this->get = new Std($request->getQueryParams());
 
        // $this->post = new Std($_POST);
         $this->post = new Std($request->getParsedBody());
