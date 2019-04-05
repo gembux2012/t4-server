@@ -77,8 +77,19 @@ class RUploader
                 echo 'Ошибка: ' . $e->getMessage() . PHP_EOL;
             });
            */
-            $output = new WritableResourceStream(STDOUT, $loop);
-            $output->write($file);
+            $filesystem = \React\Filesystem\Filesystem::create($loop);
+            $file = $filesystem->file('new_file.txt');
+            $file
+                ->open('r')
+                ->then(
+                    function (React\Stream\ReadableStreamInterface $stream) use ($loop) {
+                        $output = new WritableResourceStream(STDOUT, $loop);
+                        $output -> write($stream);
+                        $stream->on('end', function () use ($output) {
+                            $output->end();
+
+                    });
+
             });
             $readable->on('end', function () use ($output) {
                 $output->end();
