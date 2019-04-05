@@ -15,6 +15,7 @@ use T4\Dbal\Connection;
 use T4\Http\E403Exception;
 use T4\Http\E404Exception;
 use T4\Http\Request;
+use T4\Http\RUploader;
 use T4\Threads\Helpers;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Response;
@@ -39,6 +40,7 @@ use React\Promise\Promise;
  * @property \T4\Mvc\Module[] $modules
  * @property \T4\Mvc\AssetsManager $assets
  * @property \T4\Core\Flash $flash
+ * @property |T4\Http\Request $request
  */
 class Application
     implements
@@ -54,9 +56,8 @@ class Application
     use TRunCommand;
 
     public $request =null;
-
-
     public $response ;
+    public  $loop;
 
 
 
@@ -101,6 +102,7 @@ class Application
 
         $this->init();
         $loop = \React\EventLoop\Factory::create();
+        $this->loop=$loop;
 
                $server = new \React\Http\Server(array(function   (
 
@@ -162,12 +164,11 @@ class Application
 
 
                 $file = pathinfo($request->getUri()->getPath(), PATHINFO_EXTENSION);
-                if ($file != '' && $file != 'json') {
+                if ( '' != $file &&   'json' !=$file) {
                     $givestatic = new GiveStatic();
                     return $givestatic($request, $loop);
 
                 }
-
 
                 $this->request = new Request($request);
                 $route = $this->router->parseRequest($this->request);
@@ -175,12 +176,7 @@ class Application
 
             }
 
-
-
-
         ));
-
-
 
         $socket = new \React\Socket\Server(8008, $loop);
         $server->listen($socket);
@@ -216,16 +212,7 @@ class Application
 
     }
 
-    public function AppResponse($status,$headers,$body){
 
-        return new Response(
-            $status,
-            $headers,
-            $body
-        );
-
-
-    }
 
     /**
      * @param callable $callback

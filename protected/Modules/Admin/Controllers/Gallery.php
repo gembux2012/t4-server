@@ -6,6 +6,7 @@ use App\Modules\Gallery\Models\Album;
 use App\Modules\Gallery\Models\Photo;
 use T4\Core\Exception;
 use T4\Html\Form\Errors;
+use T4\Http\RUploader;
 use T4\Http\Uploader;
 use T4\Mvc\Controller;
 
@@ -194,7 +195,7 @@ class Gallery
         if (!null == $id) {
             $this->data->item = Photo::findByPK($id);
         } else {
-            $uploader = new Uploader('image');
+            $uploader = new RUploader('image');
             $uploader->setPath('/public/gallery/photos');
             $images = $uploader();
             $this->data->items = $images;

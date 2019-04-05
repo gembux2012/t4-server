@@ -63,13 +63,15 @@ class Helpers
 
     public static function redirect($url)
     {
+
         if (false === strpos($url, 'http') && false === strpos($url, 'https')) {
             $protocol = \T4\Mvc\Application::instance()->request->protocol;
             $host = \T4\Mvc\Application::instance()->request->host;
-            return ['Location' => $protocol . '://' . $host . $url];
+           // return ['Location' => $protocol . '://' . $host.':'.$port . $url];
+            return ['Location' =>$url];
             //header('Location: ' . $protocol . '://' . $host . $url, true, 302);
         } else {
-            return ['Location' => $url];
+            return ['Location' =>$url];
             //header('Location: ' . $url, true, 302);
         }
 

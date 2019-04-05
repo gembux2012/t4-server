@@ -25,12 +25,13 @@ use React\Http\Response;
  * @property \T4\Core\Std $body
  * @property \T4\Core\Std $files
  * @property \T4\Core\Std $headers
+ * @property ServerRequestInterface $request
  */
 class Request
     extends Std
 {
 
-    private $request;
+    public $request;
 
     public function __construct(ServerRequestInterface $request)
     {
@@ -60,7 +61,7 @@ class Request
 
        // $this->post = new Std($_POST);
         $this->post = new Std($request->getParsedBody());
-
+/*
         $input = file_get_contents('php://input');
         if ($input) {
             $decoded = @json_decode($input, true);
@@ -90,7 +91,7 @@ class Request
                 }
             }
         }
-
+*/
         $this->headers = new Std($this->getHttpHeaders());
     }
 
