@@ -20,14 +20,11 @@ class GiveStatic
 
     public function __invoke(ServerRequestInterface $request, $loop)
     {
-        $childProcess = 0;
-        $conection = '';
 
         $ext = pathinfo($request->getRequestTarget(), PATHINFO_EXTENSION);
         $file = Helpers::getRealPath(urldecode($request->getUri()->getPath()));
 
-        if ($request->getHeader('Connection') == 'keep-alive')
-            $conection == 'keep-alive';
+        if (file_exists($file)){
 
         switch ($ext) {
 
@@ -41,10 +38,6 @@ class GiveStatic
                 $content_type = 'application/octet-stream';
         }
 
-        //  $code = mb_detect_encoding($file);
-        // $file=iconv("UTF-8", $code, $file);
-
-        if (file_exists($file)){
         $last_modified_time = filemtime($file);
         $etag = md5_file($file);
         $header = [
@@ -57,16 +50,23 @@ class GiveStatic
         if (@strtotime($request->getHeaderLine('If-Modified-Since')) == $last_modified_time ||
             $request->getHeaderLine('If-None-Match') == $etag
         ) {
-            $status = 304;
+            return new Response(304);
         } else {
-            $status = 200;
-            $childProcess = new Process('cat ' . $file);
-            $childProcess->start($loop);
-
+         /*   $status = 200;
+            //$childProcess = new Process('cat ' . $file);
+            //$childProcess->start($loop);
             return new Response($status,
                 $header,
                 $childProcess->stdout
             );
+         */
+            $filesystem = \React\Filesystem\Filesystem::create($loop);
+                    $file = $filesystem->file($file);
+                    return $file->open('r')->then(
+                        function (\React\Filesystem\Stream\ReadableStream $stream) {
+                            return new Response(200, ['Content-Type' => 'video/mp4'], $stream);
+                        }
+                    );
         }
     } else {
 

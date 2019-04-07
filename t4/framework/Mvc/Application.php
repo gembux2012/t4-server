@@ -148,6 +148,7 @@ class Application
 
                     default:
                         {
+
                             return new Response(
                                 500,
                                 array(),
@@ -181,7 +182,7 @@ class Application
         $socket = new \React\Socket\Server(8008, $loop);
         $server->listen($socket);
         $server->on('error', function (Exception $e){
-           echo $e->getMesage();
+           echo $e->getTrace();
         });
         $loop->run();
 

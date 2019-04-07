@@ -12,6 +12,8 @@ use T4\Core\Exception;
 use T4\Mvc\Application;
 use React\ChildProcess\Process;
 use React\Stream\WritableResourceStream;
+use function React\Promise\Stream\unwrapWritable;
+use RuntimeException;
 
 
 class RUploader
@@ -65,40 +67,20 @@ class RUploader
         /** @var \Psr\Http\Message\UploadedFileInterface $file */
         foreach ($files as $n => $file){
 
-            //$name=$file->getClientFilename();
             $name=$file->getClientFilename();
-         /*
-            $name= str_replace(' ', '_', $name);
-            $process = new Process(
-                "cat >".$realUploadPath.DS.$name );
-            $process->start($loop);
-            $process->stdin->end($file->getStream()->getContents());
-            $process->on('error', function (Exception $e) {
-                echo 'Ошибка: ' . $e->getMessage() . PHP_EOL;
-            });
-           */
+            $max_filesize=ini_get('upload_max_filesize ')ж
+            if ($file->getSize() > ini_get($max_filesize)){
+                throw new RuntimeException('Файл больше '.$max_filesize.' Mb');
+                }
+
             $filesystem = \React\Filesystem\Filesystem::create($loop);
-            $file = $filesystem->file('new_file.txt');
-            $file
-                ->open('r')
-                ->then(
-                    function (React\Stream\ReadableStreamInterface $stream) use ($loop) {
-                        $output = new WritableResourceStream(STDOUT, $loop);
-                        $output -> write($stream);
-                        $stream->on('end', function () use ($output) {
-                            $output->end();
+           // $file = unwrapWritable($filesystem->file($realUploadPath.DS.$name)->open('cw'));
+            $file_w = $filesystem->file($realUploadPath.DS.$name);
+           $file_w->putContents($file->getStream()->getContents());
 
-                    });
 
-            });
-            $readable->on('end', function () use ($output) {
-                $output->end();
-                $output->write('Hello!');
-            });
-            $ret[$n] = $this->uploadPath . '/' . $name;
-
+            $ret[$n][$file->getClientMediaType()] = $this->uploadPath . '/' . $name;
         }
-
             return $ret;
 
     }

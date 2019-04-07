@@ -15,7 +15,8 @@
     "phpmailer/phpmailer": "5.*",
     "psr/log": "1.*",
     "react/http": "^0.8.4",
-    "react/child-process": "^0.6.1"
+    "react/child-process": "^0.6.1",
+    "react/filesystem": "^0.1.2"
   },
   "require-dev": {
     "phing/phing": "2.*",

@@ -124,7 +124,11 @@
     <td><input type="radio" name="cover" value="{{ photo.Pk }}" {% if photo.Pk== item.cover.Pk %} checked {% endif %}></td>
     <td>
         <a data-toggle="modal" href="#view-pic" data-id="{{item.Pk}}">
+            {% if photo.image matches '/\.(?:mpeg|ra?m|avi|mp(?:g|e|4)|mov|divx|asf|qt|wmv|m\dv|rv|vob|asx|ogm)$/i' %}
+            <video source src="{{ photo.image }}" width="80"></video>
+            {% else %}
             <img class="img-responsive" src="{{ photo.image }}" width="80" alt="{{ item.title }}"/>
+            {% endif %}
         </a>
     </td>
     <td>{{ photo.title }}</td>

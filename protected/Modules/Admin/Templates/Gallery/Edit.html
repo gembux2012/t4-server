@@ -24,7 +24,11 @@
 
     <div class="media">
         <div class="media-left">
+            {% if item matches '/\.(?:mpeg|ra?m|avi|mp(?:g|e|4)|mov|divx|asf|qt|wmv|m\dv|rv|vob|asx|ogm)$/i' %}
+            <video source src="{{ item }}" width="80"></video>
+            {% else %}
             <img class="media-object" src="{{ item }}" style="max-width: 200px; max-height: 200px;">
+            {% endif %}
         </div>
         <div class="media-body">
             <div class="col-sm-10"><label for="title" class="col-sm-2 control-label ">Описание</label></div>
@@ -42,7 +46,11 @@
 
     <div class="media">
         <div class="media-left">
+            {% if item.image matches '/\.(?:mpeg|ra?m|avi|mp(?:g|e|4)|mov|divx|asf|qt|wmv|m\dv|rv|vob|asx|ogm)$/i' %}
+            <video source src="{{ item.image }}" width="80"></video>
+            {% else %}
             <img class="media-object" src="{{ item.image }}" style="max-width: 200px; max-height: 200px;">
+            {% endif %}
         </div>
         <div class="media-body">
             <div class="col-sm-10"><label for="title" class="col-sm-2 control-label ">Описание</label></div>
