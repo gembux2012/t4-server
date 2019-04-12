@@ -7,10 +7,14 @@
       $.get('/Gallery/getAlbumByUrl.json/?url=test&page='+num, function (result) {
 
           var template = document.getElementById('templates').innerHTML;
-          var view =  {items: result.items};
+          var view =  {photo: result.foto, video: result.video };
+          //console.log(result.foto, result.video )
+        //  var view1 =  {photo: result.photo };
           var output = Mustache.render(template, view);
+         // var output1 = Mustache.render(template, view1);
 
           $("#output").html(output);
+          //$("#output").html(output1);
 
          var container = $('#container_gallery').mosaicflow({
               itemSelector: '.mosaicflow__item',
@@ -70,19 +74,32 @@ $(window).load(function(){
     <div class="container">
         <h1 class="h3 text-center">Галерея  {{album.title}}</h1>
         <div id="container_gallery">
-            {% raw %}
-            {{#items}}
+
             <div class="mosaicflow__item">
-                {% if item.image matches '/\.(?:mpeg|ra?m|avi|mp(?:g|e|4)|mov|divx|asf|qt|wmv|m\dv|rv|vob|asx|ogm)$/i' %}
-                <video source src="{{ photo.image }}" width="80"></video>
-                {% else %}
+                <a data-fancybox="gallery" href="{{image}}">
+                  <h3> HTTP сервер в на фреймворке t4 </h3>
+                </a>
+                <p class="caption">{{title}}</p>
+            </div>
+            {% raw %}
+            {{#photo}}
+            <div class="mosaicflow__item">
                 <a data-fancybox="gallery" href="{{image}}">
                     <img class="img-responsive" src="{{image}}" alt="">
                 </a>
-                {% endif %}
                 <p class="caption">{{title}}</p>
             </div>
-            {{/items}}
+            {{/photo}}
+            {{#video}}
+            <div class="mosaicflow__item">
+                <a data-fancybox="gallery" href="{{image}}">
+                    <video source src="{{ image }}"  width="300" autoplay ></video>
+                </a>
+                <p class="caption">{{title}}</p>
+            </div>
+            {{/video}}
+
+
         </div>
     </div>
     {% endraw %}

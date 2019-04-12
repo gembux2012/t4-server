@@ -5,9 +5,11 @@ namespace T4 {
     const VERSION = 0.1;
 }
 
+/*
 namespace {
     const DS = DIRECTORY_SEPARATOR;
 }
+*/
 
 namespace {
     if (!class_exists('\\T4\\Core\\Std')) {

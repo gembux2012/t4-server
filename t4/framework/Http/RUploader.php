@@ -68,18 +68,18 @@ class RUploader
         foreach ($files as $n => $file){
 
             $name=$file->getClientFilename();
-            $max_filesize=ini_get('upload_max_filesize ')ж
-            if ($file->getSize() > ini_get($max_filesize)){
-                throw new RuntimeException('Файл больше '.$max_filesize.' Mb');
+
+            if ($file->getSize() > 536870912){
+                throw new RuntimeException('Файл больше '.'512  Mb');
                 }
 
             $filesystem = \React\Filesystem\Filesystem::create($loop);
-           // $file = unwrapWritable($filesystem->file($realUploadPath.DS.$name)->open('cw'));
+            //$file = unwrapWritable($filesystem->file($realUploadPath.DS.$name)->open('cw'));
             $file_w = $filesystem->file($realUploadPath.DS.$name);
            $file_w->putContents($file->getStream()->getContents());
 
 
-            $ret[$n][$file->getClientMediaType()] = $this->uploadPath . '/' . $name;
+            $ret[$n] = $this->uploadPath . '/' . $name;
         }
             return $ret;
 

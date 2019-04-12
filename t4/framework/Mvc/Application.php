@@ -2,6 +2,9 @@
 
 namespace T4\Mvc;
 
+require __DIR__ . 'function';
+
+
 use App\Models\User;
 use React\Promise\RejectedPromise;
 use T4\Console\TRunCommand;
@@ -21,6 +24,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Response;
 use React\Stream\ThroughStream;
 use React\Promise\Promise;
+
 
 /**
  * Class Application
@@ -103,10 +107,23 @@ class Application
         $this->init();
         $loop = \React\EventLoop\Factory::create();
         $this->loop=$loop;
+        $error =function (ServerRequestInterface $request, callable $next, $that) {
 
-               $server = new \React\Http\Server(array(function   (
 
-            ServerRequestInterface $request, callable $next) use ($loop){
+        };
+
+               $server = new \React\Http\Server(array
+               ($error(),
+                   function(
+
+
+            ServerRequestInterface $request, callable $next) use ($loop ){
+                   $file = pathinfo($request->getUri()->getPath(), PATHINFO_EXTENSION);
+                   if ( '' != $file &&   'json' !=$file) {
+                       $givestatic = new GiveStatic();
+                       return $givestatic($request, $loop) ;
+
+                   }
 
 
             $promise = new Promise(function ($resolve) use ($next, $request) {
@@ -115,16 +132,9 @@ class Application
 
             });
 
-            /*
-            return $promise->then( null, function (Exception $e){
-                return new Response(
-                    500,
-                    array(),
-                    'Internal error: ' . $e->getMessage()
-                );
-            } */
 
-            return $promise->otherwise(function($e){
+            return  $error();
+                $promise->otherwise(function($e){
                 switch (get_class($e)) {
                     case "T4\Http\E404Exception":
                         {
@@ -151,7 +161,7 @@ class Application
 
                             return new Response(
                                 500,
-                                array(),
+                                ['Content-Type' => 'text/plain', 'charset' => 'utf-8'],
                                 'Internal error: ' . $e->getMessage()
                             );
                         }
@@ -163,16 +173,9 @@ class Application
             function (ServerRequestInterface $request )  use ($loop) {
 
 
-
-                $file = pathinfo($request->getUri()->getPath(), PATHINFO_EXTENSION);
-                if ( '' != $file &&   'json' !=$file) {
-                    $givestatic = new GiveStatic();
-                    return $givestatic($request, $loop);
-
-                }
-
                 $this->request = new Request($request);
                 $route = $this->router->parseRequest($this->request);
+                throw new Exception('jkhkjhkjhkjhkjh');
                 return $this->runRoute($route);
 
             }
@@ -340,6 +343,8 @@ class Application
             echo $message;
         }
     }
+
+
 
     
 

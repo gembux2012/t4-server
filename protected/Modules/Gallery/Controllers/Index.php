@@ -51,14 +51,20 @@ class Index extends Controller
                     'limit' => $count,
                 ]);
 
-                $data = [];
+                $video = [];
+                $foto = [];
                 foreach ($items as $sub_item => $value) {
-
-                    $data[] = $value->getData();
+                    $match = [];
+                    if(preg_match('/.(?:mpeg|ra?m|avi|mp(?:g|e|4)|mov|divx|asf|qt|wmv|m\dv|rv|vob|asx|ogm)$/',$items[$sub_item]->image,$match)){
+                        $video[] = $value->getData();
+                    } else {
+                        $foto[] = $value->getData();
+                    }
 
                 }
 
-                $this->data->items = $data;
+                $this->data->video = $video;
+                $this->data->foto = $foto;
                 $this->data->paginator=$paginator;
             }
         } else {
