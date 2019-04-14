@@ -7,7 +7,7 @@
  */
 
 
-namespace T4\Mvc;
+namespace App\Server;
 
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Response;
@@ -16,10 +16,20 @@ use T4\Fs\Helpers;
 
 class GiveStatic
 {
+    private $loop;
 
-    public function __invoke(ServerRequestInterface $request, $loop)
+    public function __construct( $filesystem)
     {
+        $this->filesystem = $filesystem;
+    }
 
+    public function __invoke(ServerRequestInterface $request,  $next)
+    {
+        $file = pathinfo($request->getUri()->getPath(), PATHINFO_EXTENSION);
+        if ( '' == $file ||   'json' ==$file) {
+            return $next($request);
+
+        }
         $ext = pathinfo($request->getRequestTarget(), PATHINFO_EXTENSION);
         $file = Helpers::getRealPath(urldecode($request->getUri()->getPath()));
 
@@ -52,9 +62,9 @@ class GiveStatic
                 return new Response(304);
             } else {
 
-                $filesystem = \React\Filesystem\Filesystem::create($loop);
+                //$filesystem = \React\Filesystem\Filesystem::create($loop);
 
-                $file_out = $filesystem->file($file);
+                $file_out = $this ->filesystem -> file($file);
 
                 return $file_out->open('r')->then(
                     function (\React\Filesystem\Stream\ReadableStream $stream) use ($header) {
@@ -73,5 +83,6 @@ class GiveStatic
                 ],
                 'fail not found');
         }
+
     }
 }

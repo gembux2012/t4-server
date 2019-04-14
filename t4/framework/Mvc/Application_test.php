@@ -2,6 +2,9 @@
 
 namespace T4\Mvc;
 
+require __DIR__ . 'function';
+
+
 use App\Models\User;
 use React\Promise\RejectedPromise;
 use T4\Console\TRunCommand;
@@ -45,8 +48,8 @@ use React\Promise\Promise;
  */
 class Application
     implements
-    ISingleton,
-    IApplication
+        ISingleton,
+        IApplication
 {
     use
         TStdGetSet,
@@ -100,8 +103,94 @@ class Application
     {
 
 
+
         $this->init();
+        $loop = \React\EventLoop\Factory::create();
+        $this->loop=$loop;
+        $error =function (ServerRequestInterface $request, callable $next, $that) {
+
+
+        };
+
+               $server = new \React\Http\Server(array
+               ($error(),
+                   function(
+
+
+            ServerRequestInterface $request, callable $next) use ($loop ){
+                   $file = pathinfo($request->getUri()->getPath(), PATHINFO_EXTENSION);
+                   if ( '' != $file &&   'json' !=$file) {
+                       $givestatic = new GiveStatic();
+                       return $givestatic($request, $loop) ;
+
+                   }
+
+
+            $promise = new Promise(function ($resolve) use ($next, $request) {
+
+                $resolve($next($request));
+
+            });
+
+
+            return  $error();
+                $promise->otherwise(function($e){
+                switch (get_class($e)) {
+                    case "T4\Http\E404Exception":
+                        {
+                            if (!empty($this->config->errors['404'])) {
+                                $route = new Route($this->config->errors['404']);
+                                $route->params->message = $e->getMessage();
+                                return $this->runRoute($route, 'html');
+                            }
+
+                        }
+
+                    case "T4\Http\E403Exception":
+                        {
+                            if (!empty($this->config->errors['403'])) {
+                                $route = new Route($this->config->errors['403']);
+                                $route->params->message = $e->getMessage();
+                                return $this->runRoute($route, 'html');
+                            }
+
+                        }
+
+                    default:
+                        {
+
+                            return new Response(
+                                500,
+                                ['Content-Type' => 'text/plain', 'charset' => 'utf-8'],
+                                'Internal error: ' . $e->getMessage()
+                            );
+                        }
+                }
+            });
+              },
+
+
+            function (ServerRequestInterface $request )  use ($loop) {
+
+
+                $this->request = new Request($request);
+                $route = $this->router->parseRequest($this->request);
+                throw new Exception('jkhkjhkjhkjhkjh');
+                return $this->runRoute($route);
+
+            }
+
+        ));
+
+        $socket = new \React\Socket\Server(8008, $loop);
+        $server->listen($socket);
+        $server->on('error', function (Exception $e){
+           echo $e->getTrace();
+        });
+        $loop->run();
+
     }
+
 
     /**
      * @param \T4\Mvc\Route|string $route
@@ -223,16 +312,16 @@ class Application
 
     public function action404($message = null)
     {
-        /*
-         header("HTTP/1.0 404 Not Found", true, 404);
-         if (!empty($this->config->errors['404'])) {
-             $route = new Route($this->config->errors['404']);
-             $route->params->message = $message;
-             $this->runRoute($route, 'html');
-         } else {
-             echo $message;
-         }
-        */
+       /*
+        header("HTTP/1.0 404 Not Found", true, 404);
+        if (!empty($this->config->errors['404'])) {
+            $route = new Route($this->config->errors['404']);
+            $route->params->message = $message;
+            $this->runRoute($route, 'html');
+        } else {
+            echo $message;
+        }
+       */
 
         return new Response(
             404,
@@ -257,6 +346,6 @@ class Application
 
 
 
-
+    
 
 }
