@@ -59,10 +59,11 @@ class Application
     public $request =null;
     public $response ;
     public  $loop;
+    public $filesystem;
 
 
 
-    protected function init()
+    public function init()
     {
         Session::init();
         $this->initExtensions();
@@ -96,11 +97,14 @@ class Application
     }
 
 
-    public function run()
+    public function __invoke($request)
     {
 
 
         $this->init();
+        $this->request = new Request($request);
+        $route = $this->router->parseRequest($this->request);
+        return $this->runRoute($route);
     }
 
     /**

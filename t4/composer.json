@@ -15,7 +15,8 @@
     "phpmailer/phpmailer": "5.*",
     "psr/log": "1.*",
     "react/http": "^0.8.4",
-    "react/filesystem": "^0.1.2"
+    "react/filesystem": "^0.1.2",
+    "react/http-client": "^0.5.9"
   },
   "require-dev": {
     "phing/phing": "2.*",
