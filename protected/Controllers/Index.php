@@ -27,7 +27,7 @@ class Index
             $config = $this->app->config->extensions->captcha->$config;
         }
         $this->app->extensions->captcha->generateImage($config);
-        die;
+
     }
 
 }

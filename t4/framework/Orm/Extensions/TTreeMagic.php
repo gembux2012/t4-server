@@ -12,6 +12,8 @@ trait TTreeMagic
         switch (true) {
             case 'findAllTree' == $method:
                 return true;
+            case 'getToGSTree' == $method:
+                return true;
         }
         return false;
     }
@@ -25,6 +27,38 @@ trait TTreeMagic
             case 'findAllTree' == $method:
                 return $class::findAll(['order'=>'__lft']);
                 break;
+
+            case 'getToGSTree' == $method:
+                $items = $class::findAll(['order' => '__lvl']);
+
+                $el = [];
+
+                foreach ($items as $item) {
+                    $el[] = $item->getData();
+                }
+
+                $stack = array();
+                $arraySet = array();
+
+                foreach ($el as $intKey => $arrValues) {
+                    $stackSize = count($stack);
+                    while ($stackSize > 0 && $stack[$stackSize - 1]['__rgt'] < $arrValues['__lft']) {
+                        array_pop($stack);
+                        $stackSize--;
+                    }
+
+                    $link =& $arraySet;
+                    for ($i = 0; $i < $stackSize; $i++) {
+                        $link =& $link[$stack[$i]['index']]["children"];
+                    }
+                    $tmp = array_push($link, array('item' => $arrValues, 'children' => array()));
+                    array_push($stack, array('index' => $tmp - 1, '__rgt' => $arrValues['__rgt']));
+
+                }
+                return $arraySet;
+                break;
+
+
         }
     }
 
@@ -45,6 +79,7 @@ trait TTreeMagic
             case 'insertAfter':
             case 'moveToFirstPosition':
             case 'moveToLastPosition':
+            case 'getToGSTree':
                 return true;
         }
         return false;
@@ -86,7 +121,7 @@ trait TTreeMagic
                     ->from($class::getTableName())
                     ->where('__lft<:lft AND __rgt>:rgt')
                     ->order('__lft')
-                    ->params([':lft'=>$model->__lft, ':rgt'=>$model->__rgt]);
+                    ->params([':lft' => $model->__lft, ':rgt' => $model->__rgt]);
                 return $class::findAllByQuery($query);
 
             case 'findAllChildren':
@@ -96,7 +131,7 @@ trait TTreeMagic
                     ->from($class::getTableName())
                     ->where('__lft>:lft AND __rgt<:rgt')
                     ->order('__lft')
-                    ->params([':lft'=>$model->__lft, ':rgt'=>$model->__rgt]);
+                    ->params([':lft' => $model->__lft, ':rgt' => $model->__rgt]);
                 return $class::findAllByQuery($query);
 
             case 'hasChildren':
@@ -106,7 +141,7 @@ trait TTreeMagic
                     ->from($class::getTableName())
                     ->where('__lft>:lft AND __rgt<:rgt')
                     ->order('__lft')
-                    ->params([':lft'=>$model->__lft, ':rgt'=>$model->__rgt]);
+                    ->params([':lft' => $model->__lft, ':rgt' => $model->__rgt]);
                 return 0 != $connection->query($query)->fetchScalar();
 
             case 'findSubTree':
@@ -116,7 +151,7 @@ trait TTreeMagic
                     ->from($class::getTableName())
                     ->where('__lft>=:lft AND __rgt<=:rgt')
                     ->order('__lft')
-                    ->params([':lft'=>$model->__lft, ':rgt'=>$model->__rgt]);
+                    ->params([':lft' => $model->__lft, ':rgt' => $model->__rgt]);
                 return $class::findAllByQuery($query);
 
             case 'hasPrevSibling':
@@ -125,7 +160,7 @@ trait TTreeMagic
                     ->select('COUNT(*)')
                     ->from($class::getTableName())
                     ->where('__rgt<:lft AND __prt=:prt')
-                    ->params([':lft'=>$model->__lft, ':prt'=>$model->__prt]);
+                    ->params([':lft' => $model->__lft, ':prt' => $model->__prt]);
                 return 0 != $connection->query($query)->fetchScalar();
 
             case 'getPrevSibling':
@@ -136,7 +171,7 @@ trait TTreeMagic
                     ->where('__rgt<:lft AND __prt=:prt')
                     ->order('__lft DESC')
                     ->limit(1)
-                    ->params([':lft'=>$model->__lft, ':prt'=>$model->__prt]);
+                    ->params([':lft' => $model->__lft, ':prt' => $model->__prt]);
                 return $class::findByQuery($query);
 
             case 'hasNextSibling':
@@ -145,7 +180,7 @@ trait TTreeMagic
                     ->select('COUNT(*)')
                     ->from($class::getTableName())
                     ->where('__lft>:rgt AND __prt=:prt')
-                    ->params([':rgt'=>$model->__rgt, ':prt'=>$model->__prt]);
+                    ->params([':rgt' => $model->__rgt, ':prt' => $model->__prt]);
                 return 0 != $connection->query($query)->fetchScalar();
 
             case 'getNextSibling':
@@ -156,7 +191,7 @@ trait TTreeMagic
                     ->where('__lft>:rgt AND __prt=:prt')
                     ->order('__lft')
                     ->limit(1)
-                    ->params([':rgt'=>$model->__rgt, ':prt'=>$model->__prt]);
+                    ->params([':rgt' => $model->__rgt, ':prt' => $model->__prt]);
                 return $class::findByQuery($query);
 
             case 'insertBefore':
@@ -189,7 +224,36 @@ trait TTreeMagic
                 }
                 return $model;
 
+            case 'getToGSTree':
+                $items = $class::findAll(['order' => '__lvl']);
+
+                $el = [];
+
+                foreach ($items as $item) {
+                    $el[] = $item->getData();
+                }
+
+                $stack = array();
+                $arraySet = array();
+
+                foreach ($el as $intKey => $arrValues) {
+                    $stackSize = count($stack);
+                    while ($stackSize > 0 && $stack[$stackSize - 1]['__rgt'] < $arrValues['__lft']) {
+                        array_pop($stack);
+                        $stackSize--;
+                    }
+
+                    $link =& $arraySet;
+                    for ($i = 0; $i < $stackSize; $i++) {
+                        $link =& $link[$stack[$i]['index']]["children"];
+                    }
+                    $tmp = array_push($link, array('item' => $arrValues, 'children' => array()));
+                    array_push($stack, array('index' => $tmp - 1, '__rgt' => $arrValues['__rgt']));
+
+                }
+                return $arraySet;
         }
+
     }
 
 } 

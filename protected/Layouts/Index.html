@@ -1,14 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:t4="http://www.w3.org/1999/html">
 <head>
-  <meta charset="UTF-8">
-  <title>Minimal web-application based on T4 framework</title>
-  {{ publishCss() }}
+  <meta>
+  <title></title>
+  <meta charset='utf-8'>
 </head>
-<body>
-{% block content %}{% endblock %}
-{{ publishJs() }}
-привет
-</body>
-</html>
 
+<style>
+  .navbar.affix {
+    top:0;
+    width:100%;
+  }
+</style>
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="font-size: 15px;" data-spy="affix" data-offset-top="20">
+  <div class="container">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+
+    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+      
+      <section id="userlogin"></section>
+    </div>
+  </div>
+</nav>
+
+<footer>
+  <div class="container">
+    <div class="row"><t4:section id="4" /></div>
+  </div>
+</footer>
+
+
+
+</html>

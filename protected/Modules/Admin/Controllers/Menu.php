@@ -42,13 +42,13 @@ class Menu
 
     public function actionSave()
     {
-        if (!empty($_POST[MenuModel::PK])) {
-            $item = MenuModel::findByPK($_POST[MenuModel::PK]);
+        if (!empty($this->app->request->post->id)) {
+            $item = MenuModel::findByPK($this->app->request->post->id);
         } else {
             $item = new MenuModel();
         }
         $item
-            ->fill($_POST)
+            ->fill($this->app->request->post)
             ->save();
         if ($item->wasNew()) {
             $item->moveToFirstPosition();

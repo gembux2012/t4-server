@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "27e23a28227b7f8b458421a83155bf66",
-    "content-hash": "56917e62339eb6e9dda62955d3d7aab9",
+    "content-hash": "22a7c4fe78a1841e6935ff491de3311e",
     "packages": [
         {
             "name": "cakephp/core",
@@ -55,7 +54,7 @@
                 "core",
                 "framework"
             ],
-            "time": "2019-02-09 07:54:49"
+            "time": "2019-02-09T07:54:49+00:00"
         },
         {
             "name": "cakephp/utility",
@@ -108,7 +107,7 @@
                 "string",
                 "utility"
             ],
-            "time": "2018-09-14 01:26:50"
+            "time": "2018-09-14T01:26:50+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -175,7 +174,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2018-01-09 20:05:19"
+            "time": "2018-01-09T20:05:19+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -231,7 +230,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2019-03-17 17:37:11"
+            "time": "2019-03-17T17:37:11+00:00"
         },
         {
             "name": "evenement/evenement",
@@ -274,7 +273,7 @@
                 "event-dispatcher",
                 "event-emitter"
             ],
-            "time": "2017-07-23 21:35:13"
+            "time": "2017-07-23T21:35:13+00:00"
         },
         {
             "name": "indigophp/hash-compat",
@@ -325,7 +324,7 @@
                 "hash_equals",
                 "hash_pbkdf2"
             ],
-            "time": "2015-08-22 07:03:35"
+            "time": "2015-08-22T07:03:35+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -370,7 +369,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2018-07-02 15:55:56"
+            "time": "2018-07-02T15:55:56+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -431,7 +430,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2015-11-01 10:15:28"
+            "time": "2015-11-01T10:15:28+00:00"
         },
         {
             "name": "psr/http-message",
@@ -481,7 +480,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -519,7 +518,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2012-12-21 11:40:51"
+            "time": "2012-12-21T11:40:51+00:00"
         },
         {
             "name": "react/cache",
@@ -559,7 +558,7 @@
                 "promise",
                 "reactphp"
             ],
-            "time": "2018-06-25 12:52:40"
+            "time": "2018-06-25T12:52:40+00:00"
         },
         {
             "name": "react/child-process",
@@ -602,7 +601,7 @@
                 "process",
                 "reactphp"
             ],
-            "time": "2019-02-15 13:48:16"
+            "time": "2019-02-15T13:48:16+00:00"
         },
         {
             "name": "react/dns",
@@ -647,7 +646,7 @@
                 "dns-resolver",
                 "reactphp"
             ],
-            "time": "2019-04-01 07:31:55"
+            "time": "2019-04-01T07:31:55+00:00"
         },
         {
             "name": "react/event-loop",
@@ -689,7 +688,7 @@
                 "asynchronous",
                 "event-loop"
             ],
-            "time": "2019-02-07 16:19:49"
+            "time": "2019-02-07T16:19:49+00:00"
         },
         {
             "name": "react/filesystem",
@@ -746,7 +745,7 @@
                 "eio",
                 "filesystem"
             ],
-            "time": "2018-10-22 12:10:29"
+            "time": "2018-10-22T12:10:29+00:00"
         },
         {
             "name": "react/http",
@@ -794,7 +793,7 @@
                 "server",
                 "streaming"
             ],
-            "time": "2019-01-16 07:26:32"
+            "time": "2019-01-16T07:26:32+00:00"
         },
         {
             "name": "react/http-client",
@@ -838,7 +837,53 @@
             "keywords": [
                 "http"
             ],
-            "time": "2018-04-10 11:38:54"
+            "time": "2018-04-10T11:38:54+00:00"
+        },
+        {
+            "name": "react/mysql",
+            "version": "v0.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/friends-of-reactphp/mysql.git",
+                "reference": "c6daf35a494817d50298a29c858e3290b6db0e88"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/friends-of-reactphp/mysql/zipball/c6daf35a494817d50298a29c858e3290b6db0e88",
+                "reference": "c6daf35a494817d50298a29c858e3290b6db0e88",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "^3.0 || ^2.1 || ^1.1",
+                "php": ">=5.4.0",
+                "react/event-loop": "^1.0 || ^0.5",
+                "react/promise": "^2.7",
+                "react/promise-stream": "^1.1",
+                "react/promise-timer": "^1.5",
+                "react/socket": "^1.1"
+            },
+            "require-dev": {
+                "clue/block-react": "^1.2",
+                "phpunit/phpunit": "^7.0 || ^6.0 || ^5.0 || ^4.8.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\MySQL\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Async MySQL database client for ReactPHP.",
+            "keywords": [
+                "async",
+                "database",
+                "mysql",
+                "reactphp"
+            ],
+            "time": "2019-05-21T08:55:16+00:00"
         },
         {
             "name": "react/promise",
@@ -884,7 +929,7 @@
                 "promise",
                 "promises"
             ],
-            "time": "2019-01-07 21:25:54"
+            "time": "2019-01-07T21:25:54+00:00"
         },
         {
             "name": "react/promise-stream",
@@ -940,7 +985,7 @@
                 "stream",
                 "unwrap"
             ],
-            "time": "2017-12-22 12:02:05"
+            "time": "2017-12-22T12:02:05+00:00"
         },
         {
             "name": "react/promise-timer",
@@ -993,7 +1038,7 @@
                 "timeout",
                 "timer"
             ],
-            "time": "2019-03-27 18:10:32"
+            "time": "2019-03-27T18:10:32+00:00"
         },
         {
             "name": "react/socket",
@@ -1040,7 +1085,7 @@
                 "reactphp",
                 "stream"
             ],
-            "time": "2019-01-07 14:10:13"
+            "time": "2019-01-07T14:10:13+00:00"
         },
         {
             "name": "react/stream",
@@ -1086,7 +1131,7 @@
                 "stream",
                 "writable"
             ],
-            "time": "2019-01-01 16:15:09"
+            "time": "2019-01-01T16:15:09+00:00"
         },
         {
             "name": "ringcentral/psr7",
@@ -1144,7 +1189,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2018-01-15 21:00:49"
+            "time": "2018-01-15T21:00:49+00:00"
         },
         {
             "name": "tivie/php-os-detector",
@@ -1192,7 +1237,7 @@
                 "os",
                 "os detection"
             ],
-            "time": "2017-10-21 03:33:59"
+            "time": "2017-10-21T03:33:59+00:00"
         },
         {
             "name": "twig/twig",
@@ -1253,7 +1298,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-01-25 21:22:18"
+            "time": "2016-01-25T21:22:18+00:00"
         },
         {
             "name": "wyrihaximus/cpu-core-detector",
@@ -1304,7 +1349,7 @@
                 }
             ],
             "description": "Detect CPU core count and assign tasks to a specific code",
-            "time": "2019-01-19 21:54:34"
+            "time": "2019-01-19T21:54:34+00:00"
         },
         {
             "name": "wyrihaximus/file-descriptors",
@@ -1344,7 +1389,7 @@
                 }
             ],
             "description": "List open file descriptors for the current process cross platform",
-            "time": "2019-01-15 07:20:48"
+            "time": "2019-01-15T07:20:48+00:00"
         },
         {
             "name": "wyrihaximus/json-throwable",
@@ -1388,7 +1433,7 @@
                 }
             ],
             "description": "JSON encode and decode throwables and exceptions",
-            "time": "2018-03-15 13:05:59"
+            "time": "2018-03-15T13:05:59+00:00"
         },
         {
             "name": "wyrihaximus/json-utilities",
@@ -1433,7 +1478,7 @@
                 }
             ],
             "description": "Utilities for php-json-* packages",
-            "time": "2018-03-03 23:07:12"
+            "time": "2018-03-03T23:07:12+00:00"
         },
         {
             "name": "wyrihaximus/react-child-process-messenger",
@@ -1490,7 +1535,7 @@
                 }
             ],
             "description": "Messenger decorator for react/child-process",
-            "time": "2019-03-26 20:05:48"
+            "time": "2019-03-26T20:05:48+00:00"
         },
         {
             "name": "wyrihaximus/react-child-process-pool",
@@ -1545,7 +1590,7 @@
                 }
             ],
             "description": "Pool wyrihaximus/react-child-process-messenger processes",
-            "time": "2019-03-20 21:11:00"
+            "time": "2019-03-20T21:11:00+00:00"
         },
         {
             "name": "wyrihaximus/react-child-process-promise",
@@ -1593,7 +1638,7 @@
                 }
             ],
             "description": "Wrapping ticks into a promise",
-            "time": "2019-01-18 21:42:17"
+            "time": "2019-01-18T21:42:17+00:00"
         },
         {
             "name": "wyrihaximus/ticking-promise",
@@ -1640,7 +1685,7 @@
                 }
             ],
             "description": "Wrapping ticks into a promise",
-            "time": "2018-04-05 12:36:50"
+            "time": "2018-04-05T12:36:50+00:00"
         }
     ],
     "packages-dev": [
@@ -1733,7 +1778,7 @@
                 "task",
                 "tool"
             ],
-            "time": "2016-03-10 21:39:23"
+            "time": "2016-03-10T21:39:23+00:00"
         },
         {
             "name": "phpunit/dbunit",
@@ -1792,7 +1837,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-03-29 14:23:04"
+            "time": "2015-03-29T14:23:04+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1853,7 +1898,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-09-02 10:13:14"
+            "time": "2014-09-02T10:13:14+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1900,7 +1945,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2015-06-21 13:08:43"
+            "time": "2015-06-21T13:08:43+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -1941,7 +1986,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -1982,7 +2027,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2015-06-21 08:01:12"
+            "time": "2015-06-21T08:01:12+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -2032,7 +2077,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2014-03-03 05:10:30"
+            "time": "2014-03-03T05:10:30+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -2105,7 +2150,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-10-17 09:04:17"
+            "time": "2014-10-17T09:04:17+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2154,7 +2199,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2013-01-13 10:24:48"
+            "time": "2013-01-13T10:24:48+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -2203,7 +2248,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-04 07:54:35"
+            "time": "2016-03-04T07:54:35+00:00"
         }
     ],
     "aliases": [],

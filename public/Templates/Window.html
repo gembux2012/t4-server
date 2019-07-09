@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+</head>
+<body>
+<button type="button" class="btn-danger">Кнопка</button>
+<canvas></canvas>
+</body>
+<script>
+
+
+
+    var Windows = function(x,y,width,height) {
+
+         left_x = x;
+         left_y =y;
+         rgt_x = x + width -1;
+         rgt_y = y + height -1;
+
+
+
+        var canvas = document.querySelector("canvas");
+        var context = canvas.getContext("2d");
+        canvas.
+        context.fillStyle = '#28a745';
+
+        context.strokeStyle = "#0a8115";
+        context.lineWidth = 3;
+
+        var shadow_rgt = function () {
+            context.moveTo(x+1, x+height+1);
+            context.lineTo(x+width,x+height+1);
+            context.lineTo(x+width+1,x+1);
+            context.stroke();
+        }
+
+        var shadow_lft = function () {
+            context.moveTo(x-1, x+height-1);
+            context.lineTo(x-1,y+1);
+            context.lineTo(x+width-1,x+1);
+            context.stroke();
+        }
+
+        this.show = function() {
+            context.fillRect(x, y, width, height);
+            //shadow_rgt();
+            shadow_lft();
+
+        }
+        canvas.addEventListener("click", function (e) {
+            if(context.isPointInPath(e.clientX - this.getBoundingClientRect().left,e.clientY -
+                this.getBoundingClientRect().top)){
+                alert("push");
+            };
+        })
+    };
+
+    var w = new Windows(10,10,100,50);
+
+w.show();
+
+</script>
+</html>

@@ -6,7 +6,7 @@ return [
             'driver' => 'mysql',
             'host' => 'localhost',
             'dbname' => 'standard',
-            'user' => 'standard',
+            'user' => 'root',
             'password' => 'Password00',
         ],
     ],
@@ -16,7 +16,7 @@ return [
     'extensions' => [
         'jquery' => [
             'location' => 'local',
-            'ui' => true,
+            'ui' => false,
         ],
 
         'bootstrap' => [

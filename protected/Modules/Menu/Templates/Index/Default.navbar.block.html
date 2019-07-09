@@ -17,7 +17,7 @@
     {% endif %}
 
     {% if current < level %}
-    {{"</li></ul>"|repeat(level-current)|raw}}</li>
+    {{"</li></ul>"|repeat(level-current)|raw}}</li>>
     {% set level = current %}
     {% endif %}
 
@@ -30,6 +30,7 @@
     {% endfor %}
 
     {{"</li></ul>"|repeat(current)|raw}}</li>
+</ul>>
 
-</ul>
 {% endif %}
+</ul>>

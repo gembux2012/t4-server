@@ -9,6 +9,7 @@ require __DIR__ . '/../autoload.php';
 use Psr\Http\Message\ServerRequestInterface;
 use React\EventLoop;
 use React\Http\Server;
+use React\MySQL\Factory;
 use React\Promise\Promise;
 
 $app = \T4\Mvc\Application::instance();
@@ -21,6 +22,10 @@ $errorHandler = new ErrorHandler();
 $loop = EventLoop\Factory::create();
 
 $filesystem = \React\Filesystem\Filesystem::create($loop);
+
+//$factory = new Factory($loop);
+//$connection = $factory->createLazyConnection($uri);
+
 
 $givestatic = new GiveStatic($filesystem);
 
@@ -50,4 +55,6 @@ $server = new Server([
 
 $socket = new \React\Socket\Server(8008, $loop);
 $server->listen($socket);
+echo 'Listening on ' . str_replace('tcp:', 'http:', $socket->getAddress()) . PHP_EOL;
+
 $loop->run();
